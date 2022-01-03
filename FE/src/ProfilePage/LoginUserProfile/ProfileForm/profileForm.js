@@ -2,12 +2,13 @@ import classes from './profileForm.module.css';
 import axios from "axios";
 import {useState} from "react";
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const ProfileForm = (props) => {
 
     const { getProfileData: { userObject } } = props;
     // console.log(userObject)
-    const loginUser = localStorage.getItem("currentUserUsername");
+    const currentUser = useSelector(state => state.auth.loginUserInfo)
 
     const [inputFirstName, setInputFirstName] = useState(userObject.firstName);
     const [inputLastName, setInputLastName] = useState(userObject.lastName);
@@ -27,7 +28,7 @@ const ProfileForm = (props) => {
 
         const { data } = await axios.post("/updateProfileData", {
         data: formDataSent,
-        loginUser,
+        loginUser : currentUser.username,
         task,
         });
         // console.log(data);

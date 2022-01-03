@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import AccountOwnerProfile from "./LoginUserProfile";
 import axios from "axios";
 import OtherUserProfile from "./OtherUserProfile";
+import { useSelector } from "react-redux";
 
 const EachProfilePage = () => {
 
@@ -29,19 +30,19 @@ const EachProfilePage = () => {
   
   const params = useParams();
 
-  const currentUserUsername = localStorage.getItem("currentUserUsername");
+  const currentUser = useSelector(state => state.auth.loginUserInfo)
 
   useEffect(() => {
     async function getProfileData() {
       const { data } = await axios.post("/getProfileData", {
         profileUserUsername: params.id,
-        loginUserUsername: currentUserUsername
+        loginUserUsername: currentUser.username
       });
       // console.log(response)
       setGetProfileData(data);
     }
     getProfileData();
-  }, [params, currentUserUsername]);
+  }, [params, currentUser.username]);
 
   // console.log(getProfileData);
 

@@ -7,8 +7,7 @@ import { useSelector } from "react-redux";
 const EachPostHeader = (props) => {
   const { post, moderatorMode } = props;
   const { user } = post;
-
-  // const currentUserUsername = localStorage.getItem("currentUserUsername");
+  
   const currentUser = useSelector(state => state.auth.loginUserInfo)
   
   const [isAlreadyReported, setIsAlreadyReported] = useState(false);

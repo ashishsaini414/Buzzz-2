@@ -2,10 +2,13 @@ import { Fragment, useEffect, useState } from "react";
 import userLogo from "../../Assets/Images/user_logo.jpg";
 import classes from "./index.module.css";
 import SampleCoverImage from '../../Assets/Images/blank_wallpaper.jpg'
+import { useSelector } from "react-redux";
 
 const OtherUserProfile = (props) => {
   const { getProfileData } = props;
-  const currentUserUsername = localStorage.getItem("currentUserUsername");
+  
+  const currentUser = useSelector(state => state.auth.loginUserInfo)
+
 
   // console.log("nameis",getProfileData) 
 
@@ -18,13 +21,13 @@ const OtherUserProfile = (props) => {
 
 
   useEffect(()=>{
-    if(getProfileData.userObject.notifications.friendsRequest.includes(currentUserUsername)){
+    if(getProfileData.userObject.notifications.friendsRequest.includes(currentUser.username)){
       setAddFriendBoolean(true)
     }
-    if(getProfileData.userObject.friends.includes(currentUserUsername)){
+    if(getProfileData.userObject.friends.includes(currentUser.username)){
       setAlreadyFriend(true)
     }
-  },[getProfileData, currentUserUsername])
+  },[getProfileData, currentUser.username])
 
   // console.log(alreadyFriend,addFriendBoolean)
 
@@ -32,7 +35,7 @@ const OtherUserProfile = (props) => {
     fetch("/addFriend",{
         method: "POST",
         headers: { "Content-Type": "application/json"},
-        body: JSON.stringify({loginUser: currentUserUsername, friendUser:friend.username})
+        body: JSON.stringify({loginUser: currentUser.username, friendUser:friend.username})
     }).then(res => res.json()).then(data => {
       // console.log(data)
       setAddFriendBoolean(prevState => !prevState)

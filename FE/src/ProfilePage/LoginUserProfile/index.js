@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import classes from "./index.module.css";
 import ProfileForm from "./ProfileForm/profileForm";
 import Loader from "../../Assets/Loader/loader";
+import { useSelector } from "react-redux";
 
 const LoginUserProfile = (props) => {
   const { getProfileData } = props;
@@ -15,7 +16,8 @@ const LoginUserProfile = (props) => {
   // console.log(getProfileData);
   const cloudinaryUrl =
     "https://api.cloudinary.com/v1_1/buzzz-social-site/image/upload";
-  const loginUser = localStorage.getItem("currentUserUsername");
+  const currentUser = useSelector(state => state.auth.loginUserInfo)
+    
 
   const updateProfileHandler = async (e, task) => {
     setLoading(true);
@@ -49,7 +51,7 @@ const LoginUserProfile = (props) => {
     try{
       const { data } = await axios.post("/updateProfileData", {
         coverImageLink,
-        loginUser,
+        loginUser: currentUser.username,
         task,
       });
       // console.log(data);
