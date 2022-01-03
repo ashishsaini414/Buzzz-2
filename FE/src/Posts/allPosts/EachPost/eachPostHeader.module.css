@@ -1,0 +1,89 @@
+.PostHeader{
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0px;
+    /* align-items: center; */
+}
+.postDeatils{
+    display: flex;
+}
+.postOwnerImage{
+    height: 2.5em;
+    border-radius: 2em;
+    margin: 0 0.2em;
+}
+.middlePart{
+    text-align: left;
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.postOwnerName{
+    text-transform: capitalize;
+    color: var(--dark-grey);
+}
+.postCreatedDate{
+    font-size: 0.7em;
+    color: var(--grey);
+}
+.postMenuAndFlagIcons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 6.2em;
+}
+.postApproveFlagIcon{
+    background-color: var(--light-grey);
+    border-radius: 20px;
+    padding: 0.3em;
+    color: green;
+    cursor: pointer;
+}
+.postApproveFlagIcon:active{
+    background-color: var(--grey);
+    color: rgb(155, 240, 71);
+}
+
+.postRedFlagIcon{
+    background-color: var(--light-grey);
+    border-radius: 20px;
+    padding: 0.3em;
+    color: red;
+}
+.postOptions{
+    background-color: var(--light-grey);
+    border-radius: 20px;
+    padding: 0.3em;
+    color: var(--dark-grey);
+    cursor: pointer;
+}
+.postOptions:hover{
+    background-color: var(--grey);
+}
+.postMenu{
+    background-color: var(--light-grey);
+    padding: 2px;
+    transform: translateX(26em) translateY(0.5em);
+    border-radius: 5px;
+    position: absolute;
+    z-index: 3;
+}
+.postMenuList{
+    list-style: none;
+    margin: 0px 0;
+}
+.postMenuList > * {
+    padding: 3px 3px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    width: 8em;
+}
+.postMenuList > *:hover {
+    background-color: var(--grey);
+    border-radius: 2px;
+    color: white;
+}
+.postMenuList > *:active {
+    background-color: var(--dark-grey);
+}

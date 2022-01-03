@@ -1,0 +1,12 @@
+.listItem{
+    display: flex;
+    align-items: center;
+    column-gap: 1em;
+    background-color: red;
+    margin: 5px;
+}
+.listItemImage{
+    height: 2em;
+    widows: 2em;
+    border-radius: 20px;
+}

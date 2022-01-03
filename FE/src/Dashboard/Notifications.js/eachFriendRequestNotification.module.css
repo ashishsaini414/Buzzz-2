@@ -1,0 +1,25 @@
+.EachNotification{
+    background-color: var(--light-grey);
+    padding: 10px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+.EachNotification:hover{
+    background-color: rgb(146, 102, 187);
+}
+.message{
+    font-size: 0.8rem;
+}
+.AcceptButton{
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 15px;
+    background-color: var(--sky-blue);
+    color: rgb(58, 63, 55);
+}
+.AcceptButton:active{
+    background-color: skyblue;
+}

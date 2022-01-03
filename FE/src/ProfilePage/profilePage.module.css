@@ -1,0 +1,20 @@
+.wholePage{
+    height: 125vh;
+    background-color: var(--light-grey);
+}
+.middleParts{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 15vh;
+    /* border: 2px solid green; */
+}
+.profileDetails{
+    /* border: 3px dotted purple; */
+    background-color: var(--white);
+    height: max-content;
+}
+.suggestions{
+    width: 12em;
+    height: 10em;
+}

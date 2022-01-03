@@ -1,0 +1,142 @@
+.loginUserInformation > * {
+    text-align: left;
+    display: block;
+    width: 75vw;
+}
+.loginUserInformation > *:first-child {
+    background-color: var(--grey);
+    color: var(--white);
+}
+.userCoverImage{
+    height: 20vh;
+}
+.coverImagesElements{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.coverImagesElements > *:first-child{
+    margin: 2.8em auto;
+}
+.coverImageLink{
+    height: inherit;
+    width: inherit;
+}
+.coverReloadBox{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.coverImageReloadButton{
+    /* right: 0; */
+    border: none;
+    background-color: skyblue;
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.coverImageReloadButton:active{
+    background-color: slateblue;
+}
+.userProfileInformation{
+    padding: 0 1.5em;
+    margin-top: -3.5em;
+}
+.profileImageBox{
+    height: 8rem;
+    width: 8rem;
+    background-color: var(--white);
+    display: inline-flex;
+    border-radius: 5px;
+}
+.userProfileImage{
+    height: inherit;
+    width: inherit;
+    border-radius: 5px;
+    background-color: var(--white);
+}
+
+.profileImageEdit{
+    background-color: blue;
+    padding: 10px;
+    border-radius: 50%;
+    margin-left: -20px;
+    color: var(--white);
+    border: 1px solid lightgreen;
+    cursor: pointer;
+}
+.userName{
+    font-size: 2em;
+    margin: 1em 0;
+    /* margin-left: 0.5em; */
+}
+.userDetailsForm > *{
+    display: flex;
+    /* flex-direction: column; */
+    margin: 10px 0;
+}
+
+.formFirstRow{
+    display: flex;
+    /* justify-content: flex-start; */
+    column-gap: 8em;
+}
+.formFirstRow input{
+    padding: 8px;
+} 
+.formFirstRow lable{
+    color: red;
+}
+
+.formSecondRow{
+    display: flex;
+    column-gap: 8em;
+}
+.formSecondRow input{
+    padding: 8px;
+} 
+.formSecondRow lable{
+    color: red;
+}
+.formThirdRow{
+    display: flex;
+    column-gap: 13.1em;
+    align-items: center;
+}
+.formThirdRow input{
+    padding: 8px;
+} 
+.formThirdRow lable{
+    color: red;
+}
+.formFouthRow{
+    display: flex;
+    column-gap: 6em;
+    align-items: center;
+}
+.fourthRowElements{
+    display: flex;
+    column-gap: 10px;
+}
+.formFouthRow input{
+    padding: 8px;
+} 
+.formFouthRow lable{
+    color: red;
+}
+.formFivthRow{
+    display: flex;
+    column-gap: 2em;
+    padding: 10px 0;
+}
+.formFivthRow * {
+    border: none;
+    font-size: 1em;
+    background-color: skyblue;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+

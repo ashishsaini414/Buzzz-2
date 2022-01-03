@@ -1,0 +1,29 @@
+@import url("../Assets/cssVariables/variables.css"); 
+.dashboard{
+    background-color: var(--light-grey);
+    position: relative;
+}
+.middleComponents{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10vh;
+    padding-top: 4vh;
+}
+.UserComponent{
+    height: 20em;
+    width: 15em;
+}
+.posts{
+    width: 38em;
+}
+.asideComponents{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 46em;
+    width: 12.5em;
+}
+
+
+
+

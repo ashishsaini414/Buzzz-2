@@ -1,0 +1,20 @@
+.bottomComponent{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    row-gap: 20px;
+    padding: 1em;
+}
+.bottomComponent > *{
+    text-align: left;
+    border-bottom: 1px solid grey;
+    
+}
+.bottomComponent p{
+    padding: 5px;
+}
+.bottomComponent p:first-child{
+    color: var(--grey);
+    font-weight: bold;
+}

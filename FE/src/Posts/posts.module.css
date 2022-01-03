@@ -1,0 +1,7 @@
+.createPost{
+    border-radius: 5px;
+    background-color: var(--white);
+}
+.allPosts{
+    border-radius: 10px;
+}

@@ -1,0 +1,53 @@
+.WebsiteLogo{
+    border-radius: 5px;
+    cursor: pointer;
+}
+.nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--white);
+    height: 4em;
+    padding: 0 5px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+.navprofile{
+    display: flex;
+    height: 3em;
+    margin: auto 0px;
+    align-items: center; 
+}
+.userImage{
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+}
+.userName{
+    margin: auto 5px;
+    color: rgb(79, 71, 71);
+    height: 1.2em;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+.userName:active{
+    background-color: grey;
+    height: inherit;
+    padding-top: 13px;
+}
+.logoutLink{
+    border: none;
+    margin: 0px 5px;
+    padding: 8px 5px;
+    background-color: var(--light-grey);
+    cursor: pointer;
+    border-radius: 5px;
+    color: black;
+}
+.logoutLink:active{
+    background-color: rgb(98, 177, 186);
+}

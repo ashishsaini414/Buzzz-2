@@ -1,0 +1,108 @@
+.userDetailsForm > *{
+    display: flex;
+    /* justify-content: space; */
+    /* flex-direction: column; */
+    margin: 10px 0;
+}
+
+.formFirstRow{
+    /* display: flex; */
+    /* justify-content: flex-start; */
+    column-gap: 8em;
+}
+.formFirstRow input{
+    padding: 8px;
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+    /* color: ; */
+} 
+.formFirstRow label{
+    color: var(--dark-grey);
+    display: block;
+    margin-bottom: 5px;
+}
+.formSecondRow{
+    /* display: flex; */
+    column-gap: 8em;
+}
+.formSecondRow input{
+    padding: 8px;
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+} 
+.formSecondRow label{
+    color: var(--dark-grey);
+    display: block;
+    margin-bottom: 5px;
+}
+.formThirdRow{
+    /* display: flex; */
+    column-gap: 11.3em;
+    align-items: center;
+}
+.formThirdRow > * {
+    padding-right: 4px;
+    margin-bottom: 5px;
+}
+.radioElements{
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+.formThirdRow input{
+    padding: 8px;
+    /* background-color: red; */
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+    display: block;
+    margin-left: 3px;
+} 
+.formThirdRow label{
+    color: var(--dark-grey);
+    margin-bottom: 5px;
+    display: block;
+}
+.formFouthRow{
+    display: flex;
+    column-gap: 7.9em;
+    align-items: center;
+}
+.fourthRowElements{
+    display: flex;
+    justify-content: space-between;
+    column-gap: 1em;
+}
+.formFouthRow label{
+    color: var(--dark-grey);
+}
+.formFouthRow input{
+    padding: 8px;
+    margin-top: 5px;
+    display: block;
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+}
+#select{
+    display: block;
+    padding: 8px 0px;
+    margin-top: 5px;
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+    background-color: var(--white);
+}
+.formFivthRow{
+    display: flex;
+    column-gap: 2em;
+    padding: 10px 0;
+}
+.formFivthRow * {
+    border: none;
+    font-size: 1em;
+    background-color: skyblue;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.formFivthRow *:active{
+    background-color: purple;
+}

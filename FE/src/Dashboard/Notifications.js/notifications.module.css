@@ -1,0 +1,25 @@
+.notificationIcon{
+    background-color: skyblue;
+    border-radius: 20em;
+    padding: 10px 12px;
+    color: var(--white);
+    cursor: pointer;
+    position: relative;
+}
+.notificationIcon:active{
+    background-color: rebeccapurple;
+}
+.notificationList{
+    position: absolute;
+    background-color: var(--white);
+    width: 20rem; 
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.6em;
+    border-radius: 5px;
+    transform: translateX(-17.8em);
+}
+.noNotificationsMessage{
+    color: var(--dark-grey);
+    padding: 10px 0;
+}
