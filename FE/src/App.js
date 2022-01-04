@@ -10,7 +10,7 @@ import ErrorPage from "./ErrorPage/errorPage";
 
 function App() {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  console.log("APP.JS PAGE RELOAD CHECK", isLoggedIn)
+  // console.log("APP.JS PAGE RELOAD CHECK", isLoggedIn)
 
   return (
     <div className="App">

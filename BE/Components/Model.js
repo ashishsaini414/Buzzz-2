@@ -58,7 +58,7 @@ const allUsersSchema = mongoose.Schema(
         },
         zip: {
           type: Number,
-          default: null,
+          default: 0,
         }
       },
     },

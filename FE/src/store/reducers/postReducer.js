@@ -46,7 +46,6 @@ const postReducer = (state = initialState,action) => {
         }
         case "DELETE_ALL_SAVED_POSTS" : {
             state.allposts.length = 0;
-            console.log(state.allposts)
             return state
         }
         case "DELETE_ALL_SAVED_REPORTED_POSTS" :{
