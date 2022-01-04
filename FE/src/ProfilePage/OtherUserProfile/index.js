@@ -9,12 +9,10 @@ const OtherUserProfile = (props) => {
   
   const currentUser = useSelector(state => state.auth.loginUserInfo)
 
-
-  // console.log("nameis",getProfileData) 
-
   const [addFriendBoolean, setAddFriendBoolean] = useState(false)
   const [alreadyFriend, setAlreadyFriend] = useState(false)
   const designation = getProfileData.userObject.otherInformation.designation;
+  const website = getProfileData.userObject.otherInformation.website;
   const city = getProfileData.userObject.otherInformation.address.city;
   const state = getProfileData.userObject.otherInformation.address.state;
   const zip = getProfileData.userObject.otherInformation.address.zip;
@@ -69,7 +67,7 @@ const OtherUserProfile = (props) => {
             <i className="fas fa-user-plus"></i> Add Friend
           </button> :  <button className={classes.requestSentButton}>Request Sent</button> : <button className={classes.alreadyFriendButton}>Already Friend</button>}
           <a
-            href="https://www.google.com/"
+            href={website}
             target="_blank"
             rel="noreferrer"
             className={classes.VisitWebsiteLink}

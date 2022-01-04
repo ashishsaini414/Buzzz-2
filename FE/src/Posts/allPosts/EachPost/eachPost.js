@@ -3,6 +3,7 @@ import EachPostHeader from "./eachPostHeader";
 import EachPostFooter from "./eachPostFooter";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
+import {Image} from 'cloudinary-react';
 
 
 const EachPost = (props) => {
@@ -16,10 +17,10 @@ const EachPost = (props) => {
           <p className={classes.postMessage}>{post.message}</p>
         </div>
         {post.imagesUrl[0].url !== "" && <div className={classes.postImages}>
-          <Carousel autoPlay showArrows={true}>
+          <Carousel autoPlay showArrows={true} showThumbs={false}>
             {post.imagesUrl.map((imageObject,index) => {
               return <div key={index}>
-                <img src={imageObject.url} alt=""/>
+                <Image style={{height: "20em"}} cloudName="buzzz-social-site" publicId={imageObject.url}/>
               </div>
             })}
           </Carousel>
