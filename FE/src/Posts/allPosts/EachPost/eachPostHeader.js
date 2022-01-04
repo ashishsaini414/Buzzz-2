@@ -94,7 +94,7 @@ const EachPostHeader = (props) => {
               <li onClick={removePostHandler}>Remove</li>
             )}
             {moderatorMode && <li onClick={removePostHandler}>Remove</li>}
-            {!isAlreadyReported && (
+            {!isAlreadyReported && post.user.username !== currentUser.username && (
               <li onClick={() => reportPostHandler(post)}>Report Post</li>
             )}
             <li>Share</li>

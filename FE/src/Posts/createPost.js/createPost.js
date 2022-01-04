@@ -20,7 +20,7 @@ const CreatePost = () => {
     var imagesArray = [];
     e.preventDefault();
 
-    if (isFileSizeRight && (filesUploaded !== [])) {
+    if (isFileSizeRight) {
     setLoading(true);
 
       try {
@@ -110,9 +110,9 @@ const CreatePost = () => {
           maxLength="20"
           onChange={(e) => fileUploadHandler(e)}
         ></input>
-        {!isFileSizeRight ? <p className={classes.fileSizeText}>File must be less than 300kb </p> : "" }
       </form>
     </div>
+    {!isFileSizeRight ? <p className={classes.fileSizeText}>File must be less than 300kb </p> : "" }
     {loading && <Loader/>}
     </Fragment>
   );
