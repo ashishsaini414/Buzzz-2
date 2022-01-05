@@ -29,32 +29,40 @@ const AllPosts = (props) => {
         const { data } = await axios.post("/getAllPosts", {
         username: currentUser.username,
         page: isNextPageNumber,
-        });
+        }).catch(error => console.error(error))
         // console.log(data)
-        dispatch({type: "DELETE_ALL_SAVED_REPORTED_POSTS"})
-        dispatch({type: "ADD_NEW_POSTS", payload: data})
-
-        if(data.length === 0){
-            setHasMorePosts(false)
+        
+        if(!data.error){
+          dispatch({type: "DELETE_ALL_SAVED_REPORTED_POSTS"})
+          dispatch({type: "ADD_NEW_POSTS", payload: data})
+        }
+        else if(data.error){
+          console.log(data)
+        }
+        if(Array.isArray(data) && data.length === 0){
+          setHasMorePosts(false)
         }
       }
       //-------fetch reported posts
       async function fetchReportedPosts(){
         const ReportedPostsdata = await axios.post("/getAllReportedPosts",{
           page: isNextPageNumber,
-      });
+      }).catch(error => console.error(error))
+      
       // console.log(ReportedPostsdata.data)
-      dispatch({type: "SAVE_REPOTED_POST", payload: ReportedPostsdata.data});
-      dispatch({type: "DELETE_ALL_SAVED_POSTS"});
+      if(!ReportedPostsdata.error){
+        dispatch({type: "SAVE_REPOTED_POST", payload: ReportedPostsdata.data});
+        dispatch({type: "DELETE_ALL_SAVED_POSTS"});
+      }
+      else if(ReportedPostsdata.error){
+        console.log(ReportedPostsdata)
+      }
 
-      if(ReportedPostsdata.data.length === 0){
+      if(Array.isArray(ReportedPostsdata.data) && ReportedPostsdata.data.length === 0){
         setHasMorePosts(false)
       }
 
-      // console.log(ReportedPostsdata);
-
       }
-
       //-----connditions for functions
         if(!isModeratorModeON){
           fetchPosts()

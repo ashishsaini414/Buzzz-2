@@ -20,55 +20,51 @@ const EachPostHeader = (props) => {
   }, [currentUser.username, post.reports]);
 
   const reportPostHandler = async (e) => {
-    try{
       // console.log(e);
       const { data } = await axios.post("/reportPost", {
         loginUser: currentUser.username,
         reportedPostId: e._id,
-      });
-      if (data.reports.includes(currentUser.username)) {
+      }).catch(error => console.error(error))
+      if (!data.error && data.reports.includes(currentUser.username)) {
         toast.success("Reported Successfully");
+        setIsAlreadyReported(true);
+
+      }
+      else if(data.error){
+        console.log(data);
       }
       // console.log(data);
-      setIsAlreadyReported(true);
-    }
-    catch(err){
-      console.log(err)
-    }
     
   };
 
   const removePostHandler = async () => {
-    try{
       const { data } = await axios.delete("/deletePost", {
         data: {
           postId: post._id,
         },
-      });
+      }).catch(error => console.error(error))
       // console.log(mydata);
-      if(data){
+      if(!data.error){
         toast.success("Post deleted Successfully")
       }
-    }
-    catch(err){
-      console.log(err)
-    }
-    
+      else if(data.error){
+        console.log(data);
+      }
   };
 
   const approvePostHandler = async () =>{
-    try{
-      const { data} = await axios.post("/approvePost",{
+
+      const { data } = await axios.post("/approvePost",{
         postId: post._id,
-      })
-      if(data) {
+      }).catch(error => console.error(error));
+
+      if(!data.error) {
+        
         toast.success("Post Approved Successfully")
       }
-      // console.log(data)
-    }
-    catch(err){
-      console.log(err)
-    }
+      else if(data.error){
+        console.log(data)
+      }
   }
 
   return (

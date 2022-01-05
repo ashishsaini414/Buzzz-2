@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import classes from './eachFriendRequestNotification.module.css';
 import { useSelector } from 'react-redux';
+import setHeaders from '../../Assets/Apis data/fetch';
+import { toast } from 'react-toastify';
 
 const EachFriendRequestNotification = (props) => {
     const {notification} = props;
@@ -15,12 +17,16 @@ const EachFriendRequestNotification = (props) => {
         console.log(notification)
        const response =  await fetch("/acceptFriendRequest",{
            method: "POST",
-           headers:{"Content-Type":"application/json"},
+           headers:setHeaders({ "Content-Type": "application/json" }),
            body:JSON.stringify({loginUser: currentUser.username,friendWhoSentTheFriendRequest : notification.username})
-       })
+       }).catch(error => console.log("Api failed",error))
        const result = await response.json()
-       if(result){
+       if(!result.error){
+        toast.success("Friend Request Accepted")
         setIsFriendRequestSent(true)
+       }
+       else if(result.error){
+           console.log(result)
        }
     }
      return <div className={classes.EachNotification}>

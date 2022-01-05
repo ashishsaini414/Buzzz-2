@@ -20,7 +20,7 @@ const Login = () => {
               console.log("This is login information",data)
               dispatch({type: "SAVE_LOGIN_USER_DETAILS", payload:data})
               navigate("/dashboard")
-      })
+      }).catch(err => console.error(err))
   };
   const failureResponseGoogle = (response) => {
     console.log("Google response failed - ",response);

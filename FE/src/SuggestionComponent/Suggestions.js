@@ -3,6 +3,7 @@ import EachSuggestion from "./eachSuggestion";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./suggestions.module.css";
 import axios from "axios";
+import setHeaders from "../Assets/Apis data/fetch";
 
 const Suggestions = (props) => {
   const [showSearchInput, setShowSearchHandler] = useState(false);
@@ -21,13 +22,18 @@ const Suggestions = (props) => {
   useEffect(() => {
     fetch("/getAllSuggestions", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: setHeaders({ "Content-Type": "application/json" }),
       body: JSON.stringify({ loginUser: currentUser.username }),
     })
       .then((res) => res.json())
       .then((data) => {
-        dispatch({ type: "SAVE_ALL_SUGGESTIONS", payload: data });
-      });
+        if(!data.error){
+          dispatch({ type: "SAVE_ALL_SUGGESTIONS", payload: data });
+        }
+        else if(data.error){
+          console.log(data);
+        }
+      }).catch(error => console.error(error))
   }, [currentUser.username, dispatch]);
 
   useEffect(() => {
@@ -35,9 +41,14 @@ const Suggestions = (props) => {
       const { data } = await axios.post("/getFilteredSuggestion", {
         loginUser: currentUser.username,
         inputText: searchText,
-      });
+      }).catch(error => console.error(error))
       // console.log(data);
-      setFilteredSuggestions(data);
+      if(!data.error){
+        setFilteredSuggestions(data);
+      }
+      else if(data.error){
+        console.log(data);
+      }
     }, 500);
     return () => clearTimeout(timeoutDelay);
   }, [searchText, currentUser.username]);

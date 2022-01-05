@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import userLogo from '../Assets/Images/userlogo';
 import { useNavigate } from "react-router-dom";
 import {useSelector} from 'react-redux';
+import setHeaders from "../Assets/Apis data/fetch";
 
 const FriendsComponent = (props) => {
   const { data } = props;
@@ -16,17 +17,21 @@ const FriendsComponent = (props) => {
         // console.log(friend)
         await fetch("/removeFriend",{
             method:"POST",
-            headers:{"Content-Type":"application/json"},
+            headers: setHeaders({ "Content-Type": "application/json" }),
             body: JSON.stringify({ loginUser: currentUser.username, username: data.username})
         }).then(res => res.json()).then((response)=>{
-            // console.log(response)
+            console.log(response)
             if(response === "Already removed"){
               toast.error("Already removed")
-            }else{
+            }
+            else if(response.error){
+              console.log(response)
+            }
+            else{
               toast.success(`${friend.name} removed Successfully `)
             }
             setIsFriendRemoved(true)
-        })  
+        }).catch(error => console.log(error))
     }
   return (
     <Fragment>

@@ -400,7 +400,7 @@ module.exports.updateProfileData = async (dataFromClient)=>{
     //for cover image
     if(task === "coverImageUpload"){
       const result = await users.User.findOneAndUpdate({username: loginUser},{$set : {coverImageUrl : coverImageLink}},{new: true})
-      const loginUserAllPosts = await users.Posts.find({username: loginUser})
+      const loginUserAllPosts = await users.Posts.find({"user.username": loginUser})
       for(const key in loginUserAllPosts){
         await users.Posts.findByIdAndUpdate(loginUserAllPosts[key]._id,{$set : {"user.coverImageUrl": coverImageLink}})
       }
@@ -409,7 +409,7 @@ module.exports.updateProfileData = async (dataFromClient)=>{
     //for profile image
     if(task === "profileImageUpload"){
       const result = await users.User.findOneAndUpdate({username: loginUser},{$set : {imageUrl : coverImageLink}},{new: true});
-      const loginUserAllPosts = await users.Posts.find({username: loginUser})
+      const loginUserAllPosts = await users.Posts.find({"user.username": loginUser})
       for(const key in loginUserAllPosts){
         await users.Posts.findByIdAndUpdate(loginUserAllPosts[key]._id,{$set : {"user.imageUrl": coverImageLink}})
       }

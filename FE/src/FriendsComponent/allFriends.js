@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EachFriend from "./eachFriend";
 import axios from "axios";
 import classes from "./allFriends.module.css";
+import setHeaders from "../Assets/Apis data/fetch";
 
 const MyFriends = (props) => {
   const dispatch = useDispatch();
@@ -19,13 +20,20 @@ const MyFriends = (props) => {
   useEffect(() => {
     fetch("/getAllFriends", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: setHeaders({ "Content-Type": "application/json" }),
       body: JSON.stringify({ loginUser: currentUser.username }),
     })
       .then((res) => res.json())
       .then((data) => {
         dispatch({ type: "SAVE_ALL_FRIENDS", payload: data });
-      });
+      }).then(res => res.json()).then(data => {
+        if(data.error){
+          console.log(data)
+        }
+        else{
+          return;
+        }
+      }).catch(err => console.log(err));
   }, [currentUser.username, dispatch]);
 
   useEffect(() => {
@@ -33,9 +41,13 @@ const MyFriends = (props) => {
       const { data } = await axios.post("/getFilteredFriends", {
         loginUser: currentUser.username,
         inputText: searchText,
-      });
-
-      setFilteredFriends(data);
+      }).catch(err => console.log(err))
+      if(!data.error){
+        setFilteredFriends(data);
+      }
+      else if(data.error){
+        console.log(data);
+      }
     }, 500);
     return () => clearTimeout(timeoutDelay);
   }, [searchText, currentUser.username]);

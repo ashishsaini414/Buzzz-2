@@ -7,8 +7,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProfilePage from "./ProfilePage/profilePage";
 import {useSelector } from 'react-redux';
 import ErrorPage from "./ErrorPage/errorPage";
+import axios from "axios";
 
 function App() {
+  if(JSON.parse(localStorage.getItem("tokenDetails"))){
+    axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem("tokenDetails")).tokenId}`;
+  }
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   // console.log("APP.JS PAGE RELOAD CHECK", isLoggedIn)
 

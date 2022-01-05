@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import EachComment from './EachComment/eachcomment'
 import { toast } from 'react-toastify'
 import {useSelector} from 'react-redux';
+import setHeaders from '../../../Assets/Apis data/fetch';
 
 const EachPostFooter = (props) =>{
     
@@ -30,11 +31,16 @@ const EachPostFooter = (props) =>{
             var postDataForLikes = {postId: post._id}
             const response = await fetch("/getPostLikesDislikesCommentsValues",{
                 method: "POST",
-                headers: {"Content-Type":"application/json"},
+                headers: setHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify(postDataForLikes)
-            })
+            }).catch(err => console.error(err))
             const result = await response.json();
-            setTotalLikesDislikesComments(result);
+            if(!result.error){
+                setTotalLikesDislikesComments(result);
+            }
+            else if(result.error){
+                console.log(result)
+            }
         }
         likesDislikesComments();
         
@@ -42,68 +48,74 @@ const EachPostFooter = (props) =>{
     
 
     const likeButtonHandler = async (likePost, condition) => {
-        console.log(likePost)
+        // console.log(likePost)
        const response =  await fetch("/postReaction",{
             method: "POST",
-            headers:{"Content-Type":"application/json"},
+            headers:setHeaders({ "Content-Type": "application/json" }),
             body: JSON.stringify({user: currentUser.username, reaction: condition, postId: likePost._id})
-        })
+        }).catch(err => console.error(err));
         const res = await response.json()
-        if(res){
+        if(!res.error){
             setLikeToggle(prevState => !prevState)
+        }
+        else if(res.error){
+            console.log(res)
         }
         // console.log(res)
         // setTotalLikes(res.totallikes)
     }
     const dislikeButtonHandler = async (dislikePost, condition) => {
         console.log(dislikePost)
-        try{
-            await fetch("/postReaction",{
+           const response = await fetch("/postReaction",{
                 method: "POST",
-                headers:{"Content-Type":"application/json"},
+                headers:setHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify({user: currentUser.username, reaction: condition, postId: dislikePost._id})
-            })
-            setDisLikeToggle(prevState => !prevState)
-        }
-        catch(err){
-            console.log(err);
-        }
+            }).catch(error =>  console.error(error))
+            const result = response.json();
+            if(!result.error){
+                setDisLikeToggle(prevState => !prevState)
+            }
+            else if(result.error){
+                console.log(result)
+            }
     }
 
     const commentSubmitHandler = async (event) => {
         event.preventDefault();
 
-        try{
-            await fetch("/postComment",{
+          const response =  await fetch("/postComment",{
                 method: "POST",
-                headers:{"Content-Type": "application/json"},
+                headers:setHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify({message: postComment, postId: post._id, user: currentUser.username})
-            })
-            setPostComment("")
+            }).catch(error => console.error(error))
+            const result = response.json();
+            if(!result.error){
+                setPostComment("")
+            }
+            else if(result.error){
+                console.log(result);
+            }
             // console.log(result)
-        }
-        catch(err){
-            console.log(err)
-        }
+
     }
     const PostAllCommentsHandler = async () =>{
         setCommentsShow(prevState => !prevState)
         if(commentsShow){
-            try{
                 const response = await fetch("/getPostAllComments",{
                     method: "POST",
-                    headers:{"Content-Type": "application/json"},
+                    headers: setHeaders({ "Content-Type": "application/json" }),
                     body: JSON.stringify({postId: post._id})
-                })
+                }).catch(err => console.error(err));
                 const result = await response.json()
-                if(result.length === 0){
+                if(Array.isArray(result) && result.length === 0){
                     toast.error("No comments")
                 }
-                setAllCommentsData(result)
-            }
-            catch(err){
-                console.log(err)
-            }
+                if(!result.error){
+                    setAllCommentsData(result)
+                }
+                else if(result.error){
+                    console.log(result);
+                }
         }
     }
     return(<div>
@@ -142,8 +154,8 @@ const EachPostFooter = (props) =>{
         </div>
         { !commentsShow ? 
             allCommentsData.map((singleComment,index) => {
-                return <div>
-                         <EachComment key={index} singleComment={singleComment}/>
+                return <div key={index}>
+                         <EachComment singleComment={singleComment}/>
                     </div>
             }) : ""
         }

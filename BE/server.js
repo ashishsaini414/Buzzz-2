@@ -14,6 +14,26 @@ app.use(cookieParser())
 
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
+
+app.use((req, res, next)=>{
+    // console.log(req.url)
+    if(req.url === "/googleLogin"){
+        next()
+    }
+    else{
+        if(req.headers.authorization){
+            const token = req.headers.authorization.split(" ")[1]
+            // console.log(token)
+            // console.log({url : req.url,tokenn: req.headers.authorization})
+            next()
+        }
+        else{
+            res.status(401).json({ error: 'Unauthorized' });
+        }
+    }
+    
+})
+
 app.use(routes)
 
 const DB = process.env.DB;

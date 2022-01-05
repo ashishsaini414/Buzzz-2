@@ -53,10 +53,13 @@ const LoginUserProfile = (props) => {
         coverImageLink,
         loginUser: currentUser.username,
         task,
-      });
+      }).catch(error => console.error(error));
       // console.log(data);
-      if(data){
+      if(!data.error){
         toast.success(`Image Uploaded Successfully`)
+      }
+      else if(data.error){
+        console.log(data);
       }
       // setCoverImageLink(data.coverImageLink)
       setLoading(false);

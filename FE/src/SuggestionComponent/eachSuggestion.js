@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import userLogo from '../Assets/Images/userlogo';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import setHeaders from '../Assets/Apis data/fetch';
 
 
 const EachSuggestion = (props) => {
@@ -22,12 +23,17 @@ const EachSuggestion = (props) => {
     const addFriendHandler = (friend) => {
         fetch("/addFriend",{
             method: "POST",
-            headers: { "Content-Type": "application/json"},
+            headers: setHeaders({ "Content-Type": "application/json" }),
             body: JSON.stringify({loginUser: currentUser.username, friendUser:friend.username})
         }).then(res => res.json()).then(data => {
           // console.log(data)
-          setAddFriendBoolean(prevState => !prevState)
-        })
+          if(!data.error){
+            setAddFriendBoolean(prevState => !prevState)
+          }
+          else if(data.error){
+            console.log(data);
+          }
+        }).catch(error => console.error(error))
 }
     return(
         <div className={classes.user}>

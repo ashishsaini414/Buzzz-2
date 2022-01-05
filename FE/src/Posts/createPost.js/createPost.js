@@ -3,6 +3,7 @@ import classes from "./createPost.module.css";
 import { toast } from "react-toastify";
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from "../../Assets/Loader/loader";
+import setHeaders from "../../Assets/Apis data/fetch";
 
 const CreatePost = () => {
 
@@ -20,7 +21,7 @@ const CreatePost = () => {
     var imagesArray = [];
     e.preventDefault();
 
-    if (isFileSizeRight) {
+    if (isFileSizeRight && filesUploaded.length > 0) {
     setLoading(true);
 
       try {
@@ -56,13 +57,20 @@ const CreatePost = () => {
         try{ 
             await fetch("/createPost", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: setHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify(postData)
               }).then(response => response.json())
               .then(data => {
-                dispatch({type: "UPDATE_NEW_POST", payload: data}); 
+                if(!data.error){
+                  dispatch({type: "UPDATE_NEW_POST", payload: data}); 
                 // console.log(data); 
-                toast.success("Post Uploaded Successfully")})
+                toast.success("Post Uploaded Successfully")
+                }
+                else if(data.error){
+                  console.log(data)
+                }
+              }
+              )
               .catch(err => console.log(err))
             setLoading(false)
             setInputText("")
@@ -79,7 +87,7 @@ const CreatePost = () => {
   const fileUploadHandler = (e) => {
     const file = e.target.files[0];
     //Each file should be should be less than 300kb
-    if (file.size < 300000) {
+    if (file && file.size < 300000) {
       setIsFileSizeRight(true);
       toast.success(`${filesUploaded.length + 1} ${filesUploaded.length === 0 ? "file" : "files"} uploaded`)
       setFilesUploaded((prevState) => [...prevState, file]);
@@ -108,6 +116,7 @@ const CreatePost = () => {
           className={classes.fileUpload}
           id="postfile"
           maxLength="20"
+          accept=" .jpg, .jpeg .png"
           onChange={(e) => fileUploadHandler(e)}
         ></input>
       </form>

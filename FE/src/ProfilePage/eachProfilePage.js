@@ -37,9 +37,14 @@ const EachProfilePage = () => {
       const { data } = await axios.post("/getProfileData", {
         profileUserUsername: params.id,
         loginUserUsername: currentUser.username
-      });
+      }).catch(error => console.error(error))
       // console.log(response)
-      setGetProfileData(data);
+      if(!data.error){
+        setGetProfileData(data);
+      }
+      else if(data.error){
+        console.log(data);
+      }
     }
     getProfileData();
   }, [params, currentUser.username]);
