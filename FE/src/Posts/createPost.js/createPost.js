@@ -6,7 +6,7 @@ import Loader from "../../Assets/Loader/loader";
 
 const CreatePost = () => {
 
-  const [filesUploaded, setFilesUploaded] = useState("");
+  const [filesUploaded, setFilesUploaded] = useState([]);
   const [isFileSizeRight, setIsFileSizeRight] = useState(true);
   const [loading, setLoading] = useState(false);
   const [inputText, setInputText] = useState("");
@@ -81,7 +81,7 @@ const CreatePost = () => {
     //Each file should be should be less than 300kb
     if (file.size < 300000) {
       setIsFileSizeRight(true);
-      toast.success(`${filesUploaded.length + 1} files uploaded`)
+      toast.success(`${filesUploaded.length + 1} ${filesUploaded.length === 0 ? "file" : "files"} uploaded`)
       setFilesUploaded((prevState) => [...prevState, file]);
     } else {
       setIsFileSizeRight(false);

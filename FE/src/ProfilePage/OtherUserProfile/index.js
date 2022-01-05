@@ -16,6 +16,7 @@ const OtherUserProfile = (props) => {
   const city = getProfileData.userObject.otherInformation.address.city;
   const state = getProfileData.userObject.otherInformation.address.state;
   const zip = getProfileData.userObject.otherInformation.address.zip;
+  console.log(website)
 
 
   useEffect(()=>{
@@ -58,8 +59,8 @@ const OtherUserProfile = (props) => {
         <div className={classes.userDetails}>
          {designation !== "" && <p>{designation}</p>}
           { city !== "" && <span>{`${city} *`}</span>}
-          { city !== "" && <span>{`${state} *`}</span>}
-          { city !== "" && <span>{`${zip} | `}</span>}
+          { state !== "" && <span>{`${state} *`}</span>}
+          { zip !== 0 && <span>{`${zip} | `}</span>}
           <span>{`${getProfileData.userObject.friends.length} friends`}</span>
         </div>
         <div>

@@ -460,7 +460,7 @@ module.exports.getAllReportedPosts = async (dataFromClient) => {
   const { page } = dataFromClient;
   try{
     const integerNumberOfPage = parseInt(page)
-    const limit = 10;
+    const limit = 3;
     const firstIndex = (integerNumberOfPage-1)*limit;
     const lastIndex = integerNumberOfPage*limit;
     

@@ -32,7 +32,7 @@ const NavigationBar = () => {
           <p className={classes.userName} onClick={()=> navigate(`/profile/${currentUser.username}`)} >{currentUser.name}</p>
           <NotificationIcon/>
           <GoogleLogout
-            clientId="434076698303-4vqlab3auqoeeclm3tkm2c2ki7cpghvp.apps.googleusercontent.com"
+            clientId= {process.env.REACT_APP_CLIENT_ID}
             render={(renderProps) => (
               <button onClick={renderProps.onClick} className={classes.logoutLink}>Sign Out</button>
             )}

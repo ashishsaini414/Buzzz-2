@@ -16,7 +16,10 @@ const EachPost = (props) => {
         <div className={classes.postMessageBox}>
           <p className={classes.postMessage}>{post.message}</p>
         </div>
-        {post.imagesUrl[0].url !== "" && <div className={classes.postImages}>
+        {
+          post.imagesUrl.length === 1 && <Image style={{height: "20em",width: "100%"}} cloudName="buzzz-social-site" publicId={post.imagesUrl[0].url}/>
+        }
+        {post.imagesUrl[0].url !== "" && post.imagesUrl.length > 1 && <div className={classes.postImages}>
           <Carousel autoPlay showArrows={true} showThumbs={false}>
             {post.imagesUrl.map((imageObject,index) => {
               return <div key={index}>
