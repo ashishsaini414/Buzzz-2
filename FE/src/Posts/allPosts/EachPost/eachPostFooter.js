@@ -13,7 +13,11 @@ const EachPostFooter = (props) =>{
     const [postComment, setPostComment] = useState("")
     const [commentsShow, setCommentsShow] = useState(true)
     const [allCommentsData, setAllCommentsData] = useState([]);
-    const [totalLikesDislikesComments, setTotalLikesDislikesComments] = useState({})
+    const [totalLikesDislikesComments, setTotalLikesDislikesComments] = useState({
+        totalLikes: 0,
+        totalDislikes: 0,
+        totalComments: 0
+    })
 
     const currentUser = useSelector(state => state.auth.loginUserInfo)
 
@@ -121,8 +125,8 @@ const EachPostFooter = (props) =>{
     return(<div>
         <div className={classes.postLikesDislikesCommentsNumbers}>
             <div style={{display: "flex", columnGap: "1em"}}>
-                <p className={classes.totalLikes}><span className={classes.likesIcon}><i className="far fa-thumbs-up"></i></span> {totalLikesDislikesComments.totalLikes}</p>
-                <p className={classes.totalDislikes}><span className={classes.dislikesIcon}><i className="far fa-thumbs-down"></i></span> {totalLikesDislikesComments.totalDislikes}</p>
+                <p className={classes.totalLikes}><span className={classes.likesIcon}><i className="fas fa-thumbs-up"></i></span> {totalLikesDislikesComments.totalLikes}</p>
+                <p className={classes.totalDislikes}><span className={classes.dislikesIcon}><i className="fas fa-thumbs-down"></i></span> {totalLikesDislikesComments.totalDislikes}</p>
             </div>
             <p className={classes.totalComments}>
                 {`${totalLikesDislikesComments.totalComments}

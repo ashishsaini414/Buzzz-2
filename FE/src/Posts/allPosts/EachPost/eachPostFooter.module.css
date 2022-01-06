@@ -6,17 +6,23 @@
 }
 .likesIcon{
     background-color: rgb(41, 135, 208);
-    padding: 3px 4px;
+    padding: 2px 5px 5px 5px;
     border-radius: 20px;
     z-index: 3;
-    color: rgb(237, 227, 227);
+    color: white;
+}
+.likesIcon > i{
+    font-size: 0.9em;
 }
 .dislikesIcon{
-    background-color: rgb(206, 75, 75);
-    padding: 3px 4px;
+    background-color: rgb(206, 82, 82);
+    padding: 3px 5px 4px 5px;
     border-radius: 20px;
     z-index: 3;
-    color: rgb(225, 208, 208);
+    color: white;
+}
+.dislikesIcon > i{
+    font-size: 0.9em;
 }
 #unlikeButton{
     color: rgb(32, 113, 119);
@@ -39,7 +45,7 @@
     background-color: var(--white);
 }
 .activityButton:active{
-    background-color: var(--sky-blue);
+    color: rgb(39, 161, 206);
 }
 .activityButton:disabled{
     visibility: hidden;

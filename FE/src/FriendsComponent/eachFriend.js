@@ -20,7 +20,7 @@ const FriendsComponent = (props) => {
             headers: setHeaders({ "Content-Type": "application/json" }),
             body: JSON.stringify({ loginUser: currentUser.username, username: data.username})
         }).then(res => res.json()).then((response)=>{
-            console.log(response)
+            // console.log(response)
             if(response === "Already removed"){
               toast.error("Already removed")
             }

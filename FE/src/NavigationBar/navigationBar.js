@@ -16,11 +16,11 @@ const NavigationBar = () => {
   const currentUser = useSelector(state => state.auth.loginUserInfo)
 
   const logout = (response) => {
-    console.log("logout")
+    // console.log("logout")
     dispatch({type: "REMOVE_LOGIN_USER_DETAILS"})
     dispatch({type: "DELETE_ALL_SAVED_POSTS"})
     dispatch({type: "DELETE_ALL_SAVED_REPORTED_POSTS"})
-    console.log("after removing details, logout")
+    // console.log("after removing details, logout")
     navigate("/")
   }
 

@@ -276,7 +276,7 @@ module.exports.postComment =async (dataFromClient)=>{
     const {message, postId, user} = dataFromClient;
     try{
       const ownerOfComment = await users.User.findOne({username: user});
-      const currentPost = await users.Posts.findByIdAndUpdate(postId,{$push: {comments: {message,ownerOfComment, _id: new Types.ObjectId()}}});
+      const currentPost = await users.Posts.findByIdAndUpdate(postId,{$push: {comments: {_id: new Types.ObjectId(),message,ownerOfComment, createdAt: Date.now()}}});
       const updatedPost = await users.Posts.findById(postId);
       return updatedPost
     }

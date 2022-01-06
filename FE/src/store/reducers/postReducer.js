@@ -44,6 +44,19 @@ const postReducer = (state = initialState,action) => {
         case "SAVE_REPOTED_POST" : {
             return {...state, reportedPosts: [...state.reportedPosts, ...action.payload]}
         }
+        case "REMOVE_POST" :{
+            state.allposts.forEach((post,index) =>{
+                if(post._id === action.payload){
+                    state.allposts.splice(index, 1)
+                }
+            })
+            state.reportedPosts.forEach((post,index) =>{
+                if(post._id === action.payload){
+                    state.reportedPosts.splice(index, 1)
+                }
+            })
+            return {...state, allposts: [...state.allposts],reportedPosts: [...state.reportedPosts]}
+        }
         case "DELETE_ALL_SAVED_POSTS" : {
             state.allposts.length = 0;
             return state

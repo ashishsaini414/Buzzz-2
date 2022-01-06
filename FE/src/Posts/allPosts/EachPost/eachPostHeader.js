@@ -2,12 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import classes from "./eachPostHeader.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import moment from 'moment';
 
 const EachPostHeader = (props) => {
   const { post, moderatorMode } = props;
   const { user } = post;
   
+  const dispatch = useDispatch();
   const currentUser = useSelector(state => state.auth.loginUserInfo)
   
   const [isAlreadyReported, setIsAlreadyReported] = useState(false);
@@ -45,6 +47,7 @@ const EachPostHeader = (props) => {
       }).catch(error => console.error(error))
       // console.log(mydata);
       if(!data.error){
+        dispatch({type: "REMOVE_POST", payload: post._id })
         toast.success("Post deleted Successfully")
       }
       else if(data.error){
@@ -78,7 +81,7 @@ const EachPostHeader = (props) => {
         <div className={classes.middlePart}>
           <p className={classes.postOwnerName}>{user.name}</p>
           <p className={classes.postCreatedDate}>
-            {new Date(post.createdAt).toLocaleString()}
+            {moment(post.createdAt).format("MMMM DD, YYYY | hh:mm A")}
           </p>
         </div>
       </div>

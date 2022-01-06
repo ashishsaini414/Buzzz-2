@@ -17,8 +17,6 @@ const OtherUserProfile = (props) => {
   const city = getProfileData.userObject.otherInformation.address.city;
   const state = getProfileData.userObject.otherInformation.address.state;
   const zip = getProfileData.userObject.otherInformation.address.zip;
-  console.log(website)
-
 
   useEffect(()=>{
     if(getProfileData.userObject.notifications.friendsRequest.includes(currentUser.username)){

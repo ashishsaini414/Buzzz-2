@@ -30,7 +30,7 @@ app.use((req, res, next)=>{
                     res.status(403).json({error : err.message})
                 }
                 else if(payload){
-                    console.log("data after verify",payload);
+                    // console.log("data after verify",payload);
                     next();
                 }
             })

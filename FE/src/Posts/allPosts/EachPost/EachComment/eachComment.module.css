@@ -4,24 +4,33 @@
     border-bottom: 1px solid var(--light-grey);
     background-color: var(--light-grey);
 }
-.commentOwner{
+.header{
     display: flex;
-    padding: 5px 2px;
-
+    padding: 5px 5px;
+    text-align: left;
 }
 .ownerImageLink{
     border-radius: 20px;
     height: 2em;
 }
+.nameAndTime{
+    display: flex;
+    flex-direction: column;
+    margin: 2px 5px;
+    justify-content: space-between;
+}
 .ownerName{
-    color: rgb(38, 36, 36);
-    margin: auto 5px;
+    color: rgb(33, 30, 30);
+    font-size: 0.9em;
+}
+.commentTime{
+    font-size: 0.6em;
+    color: var(--dark-grey);
 }
 .message{
     text-align: left;
-    margin-left: 3em;
+    margin-left: 3.3em;
     font-size: 0.8em;
-    color: var(--dark-grey);
     text-transform: capitalize;
     padding-bottom: 5px;
     font-family: Georgia, 'Times New Roman', Times, serif
