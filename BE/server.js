@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 const bodyParser = require("body-parser");
 const routes= require("./Components/routes")
 const session = require("express-session");
+const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser")
 dotenv.config({ path: "./development.env"})
 
@@ -23,11 +24,19 @@ app.use((req, res, next)=>{
     else{
         if(req.headers.authorization){
             const token = req.headers.authorization.split(" ")[1]
-            // console.log(token)
-            // console.log({url : req.url,tokenn: req.headers.authorization})
-            next()
+            jwt.verify(token,process.env.JWT_SECRET_KEY,function(err, payload){
+                if(err) {
+                    console.log("error",err);
+                    res.status(403).json({error : err.message})
+                }
+                else if(payload){
+                    console.log("data after verify",payload);
+                    next();
+                }
+            })
         }
         else{
+            // console.log("not authorized")
             res.status(401).json({ error: 'Unauthorized' });
         }
     }

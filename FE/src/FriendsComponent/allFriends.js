@@ -26,7 +26,6 @@ const MyFriends = (props) => {
       .then((res) => res.json())
       .then((data) => {
         dispatch({ type: "SAVE_ALL_FRIENDS", payload: data });
-      }).then(res => res.json()).then(data => {
         if(data.error){
           console.log(data)
         }

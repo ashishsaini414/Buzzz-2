@@ -150,7 +150,7 @@ module.exports.googleLogin = async (loginData, res) =>{
             //here we have to use "jsonwebtoken" npm module to generate the json web token.
             //Refernce- https://www.npmjs.com/package/jsonwebtoken
 
-            const token = jwt.sign({_id: _id },"thisismysecretkey",{ expiresIn: "1d"})
+            const token = jwt.sign({_id: _id },process.env.JWT_SECRET_KEY,{ expiresIn: "1d"})
             const currentTime = new Date().getTime()
             const tokenExpirationTime = currentTime + 24*60*60*1000; //24*60*60*1000 === 24 hours
             const expiresIn = tokenExpirationTime - currentTime;
@@ -165,7 +165,7 @@ module.exports.googleLogin = async (loginData, res) =>{
                   res.send(err.message)
                 }
                 else{
-                 const token = jwt.sign({username: email },"thisismysecretkey",{ expiresIn: "1d"})
+                 const token = jwt.sign({username: email },process.env.JWT_SECRET_KEY,{ expiresIn: "1d"})
                  const currentTime = new Date().getTime()
                  const tokenExpirationTime = currentTime + 24*60*60*1000; //24*60*60*1000 === 24 hours
                  const expiresIn = tokenExpirationTime - currentTime;
