@@ -40,6 +40,9 @@ module.exports.postComment = async (req, res)=>{
     const response = await users.postComment(req.body)
     res.send(JSON.stringify(response))
 }
+module.exports.deleteComment = async (req, res) => {
+    const response = await users.deleteComment(req.body, res);
+}
 module.exports.getPostAllComments = async (req, res)=>{
     const response = await users.getPostAllComments(req.body)
     res.send(JSON.stringify(response))

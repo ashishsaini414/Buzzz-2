@@ -75,7 +75,7 @@ const EachPostFooter = (props) =>{
                 headers:setHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify({user: currentUser.username, reaction: condition, postId: dislikePost._id})
             }).catch(error =>  console.error(error))
-            const result = response.json();
+            const result = await response.json();
             if(!result.error){
                 setDisLikeToggle(prevState => !prevState)
             }
@@ -92,9 +92,11 @@ const EachPostFooter = (props) =>{
                 headers:setHeaders({ "Content-Type": "application/json" }),
                 body: JSON.stringify({message: postComment, postId: post._id, user: currentUser.username})
             }).catch(error => console.error(error))
-            const result = response.json();
+            const result = await response.json();
             if(!result.error){
+                setAllCommentsData(prevState => [result, ...prevState])
                 setPostComment("")
+                toast.success("Comment posted successfully")
             }
             else if(result.error){
                 console.log(result);
@@ -121,6 +123,21 @@ const EachPostFooter = (props) =>{
                     console.log(result);
                 }
         }
+    }
+
+    const removeCommentHandler = (data) => {
+        setAllCommentsData(prevState => {
+            prevState.forEach((item,index)=>{
+                if(item._id === data._id){
+                    prevState.splice(index,1)
+                }
+            })
+            return [...prevState]
+        });
+        setTotalLikesDislikesComments(prevState =>  {
+            return {...prevState, totalComments: prevState.totalComments - 1}
+        })
+        toast.success("Comment removed successfully")
     }
     return(<div>
         <div className={classes.postLikesDislikesCommentsNumbers}>
@@ -159,7 +176,7 @@ const EachPostFooter = (props) =>{
         { !commentsShow ? 
             allCommentsData.map((singleComment,index) => {
                 return <div key={index}>
-                         <EachComment singleComment={singleComment}/>
+                         <EachComment singleComment={singleComment} post={post} removeComment= {removeCommentHandler}/>
                     </div>
             }) : ""
         }

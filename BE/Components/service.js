@@ -276,9 +276,8 @@ module.exports.postComment =async (dataFromClient)=>{
     const {message, postId, user} = dataFromClient;
     try{
       const ownerOfComment = await users.User.findOne({username: user});
-      const currentPost = await users.Posts.findByIdAndUpdate(postId,{$push: {comments: {_id: new Types.ObjectId(),message,ownerOfComment, createdAt: Date.now()}}});
-      const updatedPost = await users.Posts.findById(postId);
-      return updatedPost
+      const currentPost = await users.Posts.findByIdAndUpdate(postId,{$push: {comments: {_id: new Types.ObjectId(),message,ownerOfComment, createdAt: Date.now()}}},{new: true});
+      return currentPost.comments.pop();
     }
     catch(error){
       return error.message
@@ -286,11 +285,31 @@ module.exports.postComment =async (dataFromClient)=>{
     
 }
 
+module.exports.deleteComment = async (dataFromClient, res) => {
+  const {postId, commentId} = dataFromClient;
+  console.log(dataFromClient)
+  try{
+
+    const post = await users.Posts.findById(postId);
+    await post.comments.filter(async (comment,index)=>{
+        if(comment._id.toString() === commentId){
+          console.log(comment,index,"finddd")
+          post.comments.splice(index, 1)
+          await post.save();
+          res.status(200).json(comment)
+        }
+    })
+  }
+  catch(err){
+    res.status(404).json({error: "not found"})
+  }
+}
+
 module.exports.getPostAllComments = async (dataFromClient) => {
     const {postId} = dataFromClient;
     try{
       const allComments = await users.Posts.findById(postId);
-      return allComments.comments;
+      return allComments.comments.reverse();
     }
     catch(err){
       return err;

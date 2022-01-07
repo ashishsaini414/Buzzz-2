@@ -45,7 +45,8 @@
     background-color: var(--white);
 }
 .activityButton:active{
-    color: rgb(39, 161, 206);
+    /* color: rgb(39, 161, 206); */
+    background-color: rgb(67, 209, 183);
 }
 .activityButton:disabled{
     visibility: hidden;

@@ -7,7 +7,28 @@
 .header{
     display: flex;
     padding: 5px 5px;
+    justify-content: space-between;
     text-align: left;
+    align-items: center;
+}
+.leftItems{
+    display: flex;
+}
+.rightItems{
+    height: max-content;
+    width: max-content;
+    
+}
+.commentRemoveIcon{
+    background-color: grey;
+    padding: 4px 6px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.commentRemoveIcon:active{
+    color: black;
+    background-color: white;
 }
 .ownerImageLink{
     border-radius: 20px;
@@ -27,6 +48,10 @@
     font-size: 0.6em;
     color: var(--dark-grey);
 }
+/* .commentRemoveIcon{
+    position: relative;
+    right: 0;
+} */
 .message{
     text-align: left;
     margin-left: 3.3em;

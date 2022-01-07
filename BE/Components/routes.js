@@ -11,6 +11,7 @@ router.post("/createPost",users.createPost);
 router.post("/getAllPosts", users.getAllPosts);
 router.post("/postReaction",users.postReaction);
 router.post("/postComment",users.postComment);
+router.delete("/deleteComment",users.deleteComment);
 router.post("/getPostAllComments",users.getPostAllComments);
 router.post("/getPostLikesDislikesCommentsValues",users.getPostLikesDislikesCommentsValues);
 router.post("/getAllNotifications",users.getAllNotifications);

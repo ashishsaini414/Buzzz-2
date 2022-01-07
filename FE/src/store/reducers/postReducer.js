@@ -14,9 +14,6 @@ const postReducer = (state = initialState,action) => {
             // console.log(action.payload);
             return {...state, allposts: [action.payload, ...state.allposts]}
         }
-        case "LOAD_POST_COMMENTS":{
-            return {...state, postComments: [...action.payload]}
-        }
         case "POST_SORT_BY_BOTTOM" : {
             const newArrayForAllPosts = []
             const newArrayForAllReportedPosts = []
