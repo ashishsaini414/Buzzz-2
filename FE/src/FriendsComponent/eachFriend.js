@@ -3,35 +3,46 @@ import classes from './eachFriendComponent.module.css';
 import { toast } from 'react-toastify';
 import userLogo from '../Assets/Images/userlogo';
 import { useNavigate } from "react-router-dom";
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import setHeaders from "../Assets/Apis data/fetch";
 
 const FriendsComponent = (props) => {
   const { data } = props;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
     const [isFriendRemoved, setIsFriendRemoved] = useState(false)
     const currentUser = useSelector(state => state.auth.loginUserInfo)
 
     const removeFriendHandler = async (friend)=>{
         // console.log(friend)
-        await fetch("/removeFriend",{
+        try{
+          await fetch("/removeFriend",{
             method:"POST",
             headers: setHeaders({ "Content-Type": "application/json" }),
             body: JSON.stringify({ loginUser: currentUser.username, username: data.username})
-        }).then(res => res.json()).then((response)=>{
-            // console.log(response)
+        }).then(res => res.json())
+        .then((response)=>{
+          if(!response.error){
             if(response === "Already removed"){
               toast.error("Already removed")
             }
-            else if(response.error){
-              console.log(response)
-            }
             else{
-              toast.success(`${friend.name} removed Successfully `)
+              props.removeFriend(response.FriendUserResponse)
+              dispatch({type: "REMOVE_FRIEND",payload: response.FriendUserResponse})
+              toast.success(`${friend.name} removed Successfully `);
+              setIsFriendRemoved(true)
             }
-            setIsFriendRemoved(true)
+          }
+          else if(response.error) {
+              throw new Error(response.error)
+          }
         }).catch(error => console.log(error))
+        }
+        catch(err){
+          console.log(err);
+        }
+        
     }
   return (
     <Fragment>

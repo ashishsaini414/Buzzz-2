@@ -23,51 +23,70 @@ const EachPostHeader = (props) => {
 
   const reportPostHandler = async (e) => {
       // console.log(e);
-      const { data } = await axios.post("/reportPost", {
-        loginUser: currentUser.username,
-        reportedPostId: e._id,
-      }).catch(error => console.error(error))
-      if (!data.error && data.reports.includes(currentUser.username)) {
-        toast.success("Reported Successfully");
-        setIsAlreadyReported(true);
-
+      try{
+        const { data } = await axios.post("/reportPost", {
+          loginUser: currentUser.username,
+          reportedPostId: e._id,
+        });
+        if(data){
+          if (data.reports.includes(currentUser.username)) {
+            toast.success("Reported Successfully");
+            setIsAlreadyReported(true);
+          }
+        }
       }
-      else if(data.error){
-        console.log(data);
+      catch(err){
+        if(err.response.data.error){
+          console.log(err.response.data.error)
+        }
+        else{
+          console.log(err)
+        }
       }
-      // console.log(data);
-    
   };
 
   const removePostHandler = async () => {
+    try{
       const { data } = await axios.delete("/deletePost", {
         data: {
           postId: post._id,
         },
-      }).catch(error => console.error(error))
-      // console.log(mydata);
-      if(!data.error){
+      });
+      if(data){
         dispatch({type: "REMOVE_POST", payload: post._id })
         toast.success("Post deleted Successfully")
       }
-      else if(data.error){
-        console.log(data);
+    }
+    catch(err){
+      if(err.response.data.error){
+        console.log(err.response.data.error)
       }
+      else{
+        console.log(err)
+      }
+    }
+      
   };
 
   const approvePostHandler = async () =>{
-
-      const { data } = await axios.post("/approvePost",{
-        postId: post._id,
-      }).catch(error => console.error(error));
-
-      if(!data.error) {
-        
-        toast.success("Post Approved Successfully")
+    
+      try{
+        const { data } = await axios.post("/approvePost",{
+          postId: post._id,
+        });
+        if(data){
+          toast.success("Post Approved Successfully")
+        }
       }
-      else if(data.error){
-        console.log(data)
+      catch(err){
+        if(err.response.data.error){
+          console.log(err.response.data.error)
+        }
+        else{
+          console.log(err)
+        }
       }
+      
   }
 
   return (

@@ -3,11 +3,8 @@ import EachGroup from "./EachRecent/listItem";
 import { useSelector } from "react-redux";
 
 const BottomComponent = () => {
-  const userObject = useSelector(
-    (state) => state.users.loginUserInfo.loginUserObject
-  );
-  // console.log(userObject);
-
+  
+  const userObject = useSelector((state) => state.users.loginUserInfo.loginUserObject);
   return (
     <div className={classes.bottomComponent}>
       <div className={classes.firstComponent}>

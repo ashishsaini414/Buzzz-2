@@ -11,19 +11,23 @@ const UserDashboardComponent = () => {
     
     useEffect(()=>{
         async function getLoginUserInfo(){
-            fetch("/getLoginUserAllInformation",{
-                method: "POST",
-                headers: setHeaders({ "Content-Type": "application/json" }),
-                body: JSON.stringify({loginUser: currentUser.username})
-            }).then(res => res.json()).then(data => {
-            // console.log("data",data)
-                if(!data.error){
-                    dispatch({type:"SAVE_LOGIN_USER_INFO", payload: data})
-                }
-                else if(data.error){
-                    console.log(data);
-                }
-            }).catch(error =>  console.error(error))
+            try{
+                fetch("/getLoginUserAllInformation",{
+                    method: "POST",
+                    headers: setHeaders({ "Content-Type": "application/json" }),
+                    body: JSON.stringify({loginUser: currentUser.username})
+                }).then(res => res.json()).then(data => {
+                    if(!data.error){
+                        dispatch({type:"SAVE_LOGIN_USER_INFO", payload: data})
+                    }
+                    else if(data.error){
+                        throw new Error(data.error);
+                    }
+                }).catch(error =>  console.log(error))
+            }
+            catch(err){
+                console.log(err);
+            }
         }
         getLoginUserInfo();
     },[currentUser.username, dispatch])

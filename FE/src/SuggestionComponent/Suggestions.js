@@ -6,9 +6,11 @@ import axios from "axios";
 import setHeaders from "../Assets/Apis data/fetch";
 
 const Suggestions = (props) => {
+  const mySuggestions = useSelector((state) => state.users.mySuggestions);
+
   const [showSearchInput, setShowSearchHandler] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState(mySuggestions);
 
   const currentUser = useSelector(state => state.auth.loginUserInfo)
 
@@ -16,39 +18,51 @@ const Suggestions = (props) => {
   // console.log(filteredSuggestions);
 
   const dispatch = useDispatch();
-  const mySuggestions = useSelector((state) => state.users.mySuggestions);
   // console.log(mySuggestions)
 
   useEffect(() => {
-    fetch("/getAllSuggestions", {
-      method: "POST",
-      headers: setHeaders({ "Content-Type": "application/json" }),
-      body: JSON.stringify({ loginUser: currentUser.username }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if(!data.error){
-          dispatch({ type: "SAVE_ALL_SUGGESTIONS", payload: data });
-        }
-        else if(data.error){
-          console.log(data);
-        }
-      }).catch(error => console.error(error))
+    try{
+      fetch("/getAllSuggestions", {
+        method: "POST",
+        headers: setHeaders({ "Content-Type": "application/json" }),
+        body: JSON.stringify({ loginUser: currentUser.username }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if(!data.error){
+            dispatch({ type: "SAVE_ALL_SUGGESTIONS", payload: data });
+          }
+          else if(data.error){
+            throw new Error(data.error);
+          }
+        }).catch(error => console.log(error))
+    }
+    catch(err){
+      console.log(err);
+    }
+    
   }, [currentUser.username, dispatch]);
-
+ 
   useEffect(() => {
     const timeoutDelay = setTimeout(async () => {
-      const { data } = await axios.post("/getFilteredSuggestion", {
-        loginUser: currentUser.username,
-        inputText: searchText,
-      }).catch(error => console.error(error))
-      // console.log(data);
-      if(!data.error){
-        setFilteredSuggestions(data);
+      try{
+        const { data } = await axios.post("/getFilteredSuggestion", {
+          loginUser: currentUser.username,
+          inputText: searchText,
+        })
+        if(data){
+          setFilteredSuggestions(data);
+        }
       }
-      else if(data.error){
-        console.log(data);
+      catch(err){
+        if(err.response.data.error){
+          console.log(err.response.data.error)
+        }
+        else {
+          console.log(err)
+        }
       }
+      
     }, 500);
     return () => clearTimeout(timeoutDelay);
   }, [searchText, currentUser.username]);

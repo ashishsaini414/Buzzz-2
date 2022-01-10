@@ -9,23 +9,35 @@ const NotificationIcon = () => {
   const dispatch = useDispatch();
 
   const allNotifications = useSelector((state) => state.users.allNotifications);
+  // console.log(allNotifications, "notifyyy")
   const currentUser = useSelector(state => state.auth.loginUserInfo)
 
 
   useEffect(() => {
     async function getAllNotifications() {
-      const response = await fetch("/getAllNotifications", {
-        method: "POST",
-        headers: setHeaders({ "Content-Type": "application/json" }),
-        body: JSON.stringify({ loginUser: currentUser.username }),
-      }).catch(error => console.error(error))
-      const result = await response.json();
-      if(!result.error){
-        dispatch({ type: "ALL_NOTIFICATIONS", payload: result });
+      try{
+        //fetch api mai custom error, api ke, result mai hi milega
+        const response = await fetch("/getAllNotifications", {
+          method: "POST",
+          headers: setHeaders({ "Content-Type": "application/json" }),
+          body: JSON.stringify({ loginUser: currentUser.username }),
+        })
+        const result = await response.json();
+        if(response.ok){
+          if(result){
+            dispatch({ type: "ALL_NOTIFICATIONS", payload: result });
+          }
+        }
+        else{
+          if(result.error){
+            throw new Error(result.error)
+          }
+        }
       }
-      else{
-        console.log(result)
+      catch(err){
+        console.log(err);
       }
+      
     }
     getAllNotifications();
   }, [currentUser.username, dispatch]);

@@ -34,17 +34,24 @@ const EachProfilePage = () => {
 
   useEffect(() => {
     async function getProfileData() {
-      const { data } = await axios.post("/getProfileData", {
-        profileUserUsername: params.id,
-        loginUserUsername: currentUser.username
-      }).catch(error => console.error(error))
-      // console.log(response)
-      if(!data.error){
-        setGetProfileData(data);
+      try{
+        const { data } = await axios.post("/getProfileData", {
+          profileUserUsername: params.id,
+          loginUserUsername: currentUser.username
+        });
+        if(data){
+            setGetProfileData(data);
+        }        
       }
-      else if(data.error){
-        console.log(data);
+      catch(err){
+        if(err.response.data.error){
+          console.log(err.response.data.error)
+        }
+        else{
+          console.log(err)
+        }
       }
+     
     }
     getProfileData();
   }, [params, currentUser.username]);

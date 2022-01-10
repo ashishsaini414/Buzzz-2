@@ -30,20 +30,26 @@ const OtherUserProfile = (props) => {
   // console.log(alreadyFriend,addFriendBoolean)
   // console.log(setHeaders)
 
-  const addFriendHandler = (friend) => {
-    fetch("/addFriend",{
-        method: "POST",
-        headers: setHeaders({ "Content-Type": "application/json"}),
-        body: JSON.stringify({loginUser: currentUser.username, friendUser:friend.username})
-    }).then(res => res.json()).then(data => {
-      // console.log(data)
-      if(!data.error){
-        setAddFriendBoolean(prevState => !prevState)
+  const addFriendHandler = async (friend) => {
+    try{
+     await fetch("/addFriend",{
+          method: "POST",
+          headers: setHeaders({ "Content-Type": "application/json"}),
+          body: JSON.stringify({loginUser: currentUser.username, friendUser:friend.username})
+        }).then(res => res.json()).then(data => {
+        // console.log(data)
+        if(!data.error){
+          setAddFriendBoolean(prevState => !prevState)
+        }
+        else if(data.error){
+          throw new Error(data.error);
+        }
+      }).catch(error => console.log("add Friend Api error",error))
       }
-      else if(data.error){
-        console.log(data)
-      }
-    }).catch(error => console.log("add Friend Api error",error))
+    catch(err){
+      console.log(err);
+    }
+    
   } 
   return (
     <Fragment>

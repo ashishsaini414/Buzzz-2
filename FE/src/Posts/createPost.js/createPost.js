@@ -63,13 +63,12 @@ const CreatePost = () => {
               .then(data => {
                 if(!data.error){
                   dispatch({type: "UPDATE_NEW_POST", payload: data}); 
-                // console.log(data); 
-                toast.success("Post Uploaded Successfully")
+                  toast.success("Post Uploaded Successfully")
                 }
                 else if(data.error){
-                  console.log(data)
+                  throw new Error(data.error);
                 }
-              }
+              } 
               )
               .catch(err => console.log(err))
             setLoading(false)

@@ -152,10 +152,8 @@ module.exports.googleLogin = async (loginData, res) =>{
 
             const token = jwt.sign({_id: _id },process.env.JWT_SECRET_KEY,{ expiresIn: "1d"})
             const currentTime = new Date().getTime()
-            const tokenExpirationTime = currentTime + 24*60*60*1000; //24*60*60*1000 === 24 hours
-            const expiresIn = tokenExpirationTime - currentTime;
-
-            res.send({tokenDetails: {tokenId: token ,expiresIn},user,isNewUserCreated: false})
+            const tokenExpirationTime = currentTime + 86400000; //86400000 ms === 24 hours
+            res.send({tokenDetails: {tokenId: token ,tokenExpirationTime},user,isNewUserCreated: false})
           }
           else{
             console.log("create new user")
@@ -167,9 +165,8 @@ module.exports.googleLogin = async (loginData, res) =>{
                 else{
                  const token = jwt.sign({username: email },process.env.JWT_SECRET_KEY,{ expiresIn: "1d"})
                  const currentTime = new Date().getTime()
-                 const tokenExpirationTime = currentTime + 24*60*60*1000; //24*60*60*1000 === 24 hours
-                 const expiresIn = tokenExpirationTime - currentTime;
-                 res.send({tokenDetails: {tokenId: token ,expiresIn},user,isNewUserCreated: true});
+                 const tokenExpirationTime = currentTime + 86400000; //86400000 ms === 24 hours
+                 res.send({tokenDetails: {tokenId: token ,tokenExpirationTime},user,isNewUserCreated: true});
                 }
               })
           }
@@ -287,13 +284,11 @@ module.exports.postComment =async (dataFromClient)=>{
 
 module.exports.deleteComment = async (dataFromClient, res) => {
   const {postId, commentId} = dataFromClient;
-  console.log(dataFromClient)
   try{
 
     const post = await users.Posts.findById(postId);
     await post.comments.filter(async (comment,index)=>{
         if(comment._id.toString() === commentId){
-          console.log(comment,index,"finddd")
           post.comments.splice(index, 1)
           await post.save();
           res.status(200).json(comment)

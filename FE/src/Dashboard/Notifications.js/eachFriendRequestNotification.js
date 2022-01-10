@@ -15,19 +15,27 @@ const EachFriendRequestNotification = (props) => {
 
     const friendRequestHandler = async () => {
         console.log(notification)
-       const response =  await fetch("/acceptFriendRequest",{
-           method: "POST",
-           headers:setHeaders({ "Content-Type": "application/json" }),
-           body:JSON.stringify({loginUser: currentUser.username,friendWhoSentTheFriendRequest : notification.username})
-       }).catch(error => console.log("Api failed",error))
-       const result = await response.json()
-       if(!result.error){
-        toast.success("Friend Request Accepted")
-        setIsFriendRequestSent(true)
-       }
-       else if(result.error){
-           console.log(result)
-       }
+        try{
+            const response =  await fetch("/acceptFriendRequest",{
+                method: "POST",
+                headers:setHeaders({ "Content-Type": "application/json" }),
+                body:JSON.stringify({loginUser: currentUser.username,friendWhoSentTheFriendRequest : notification.username})
+            })
+            const result = await response.json()
+            if(response.ok){
+                toast.success(`${result.friendRequestSendPerson.name} added`)
+                setIsFriendRequestSent(true)
+            }
+            else{
+               if(result.error){
+                   throw new Error(result.error)
+               }
+            }
+        }
+        catch(err){
+            console.log(err)
+        }
+      
     }
      return <div className={classes.EachNotification}>
         <div className={classes.message}>

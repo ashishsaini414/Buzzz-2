@@ -31,98 +31,143 @@ const EachPostFooter = (props) =>{
     },[currentUser.username, post.postReactions.likes,post.postReactions.dislikes ])
 
     useEffect(()=>{
-       async function likesDislikesComments(){
-            var postDataForLikes = {postId: post._id}
-            const response = await fetch("/getPostLikesDislikesCommentsValues",{
-                method: "POST",
-                headers: setHeaders({ "Content-Type": "application/json" }),
-                body: JSON.stringify(postDataForLikes)
-            }).catch(err => console.error(err))
-            const result = await response.json();
-            if(!result.error){
-                setTotalLikesDislikesComments(result);
+        var mount = true
+        try{
+            async function likesDislikesComments(){
+                var postDataForLikes = {postId: post._id}
+                const response = await fetch("/getPostLikesDislikesCommentsValues",{
+                    method: "POST",
+                    headers: setHeaders({ "Content-Type": "application/json" }),
+                    body: JSON.stringify(postDataForLikes),
+                });
+                const result = await response.json();
+                if(response.ok){
+                    if(result && mount) {
+                        setTotalLikesDislikesComments(result);
+                    }
+                }
+                else if(!response.ok){
+                    if(result.error){
+                        throw new Error(JSON.parse(result.error))
+                    }
+                }
             }
-            else if(result.error){
-                console.log(result)
-            }
+            likesDislikesComments();
         }
-        likesDislikesComments();
-        
+        catch(err){
+            console.log(err)
+        }
+        return () => mount = false;
     },[likeToggle,dislikeToggle,postComment, post])
     
 
     const likeButtonHandler = async (likePost, condition) => {
-        // console.log(likePost)
-       const response =  await fetch("/postReaction",{
-            method: "POST",
-            headers:setHeaders({ "Content-Type": "application/json" }),
-            body: JSON.stringify({user: currentUser.username, reaction: condition, postId: likePost._id})
-        }).catch(err => console.error(err));
-        const res = await response.json()
-        if(!res.error){
-            setLikeToggle(prevState => !prevState)
-        }
-        else if(res.error){
-            console.log(res)
-        }
-        // console.log(res)
-        // setTotalLikes(res.totallikes)
-    }
-    const dislikeButtonHandler = async (dislikePost, condition) => {
-        console.log(dislikePost)
-           const response = await fetch("/postReaction",{
+        try{
+            const response =  await fetch("/postReaction",{
                 method: "POST",
                 headers:setHeaders({ "Content-Type": "application/json" }),
-                body: JSON.stringify({user: currentUser.username, reaction: condition, postId: dislikePost._id})
-            }).catch(error =>  console.error(error))
+                body: JSON.stringify({user: currentUser.username, reaction: condition, postId: likePost._id})
+            })
             const result = await response.json();
-            if(!result.error){
-                setDisLikeToggle(prevState => !prevState)
+            if(response.ok){
+                if(result){
+                setLikeToggle(prevState => !prevState)
+                }
             }
-            else if(result.error){
-                console.log(result)
+            else if(!response.ok){
+                if(result.error){
+                    throw new Error(result.error);
+                }
             }
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+    const dislikeButtonHandler = async (dislikePost, condition) => {
+            try{
+                const response = await fetch("/postReaction",{
+                    method: "POST",
+                    headers:setHeaders({ "Content-Type": "application/json" }),
+                    body: JSON.stringify({user: currentUser.username, reaction: condition, postId: dislikePost._id})
+                });
+                const result = await response.json();
+                if(response.ok){
+                    if(result){
+                        setDisLikeToggle(prevState => !prevState)
+                    }
+                }
+                else if(!response.ok){
+                    if(result.error){
+                        throw new Error(result.error)
+                    }
+                }
+            }
+            catch(err){
+                console.log(err);
+            }
+           
     }
 
     const commentSubmitHandler = async (event) => {
-        event.preventDefault();
-
-          const response =  await fetch("/postComment",{
-                method: "POST",
-                headers:setHeaders({ "Content-Type": "application/json" }),
-                body: JSON.stringify({message: postComment, postId: post._id, user: currentUser.username})
-            }).catch(error => console.error(error))
-            const result = await response.json();
-            if(!result.error){
-                setAllCommentsData(prevState => [result, ...prevState])
-                setPostComment("")
-                toast.success("Comment posted successfully")
-            }
-            else if(result.error){
-                console.log(result);
-            }
-            // console.log(result)
+        try{
+            event.preventDefault();
+            const response =  await fetch("/postComment",{
+                  method: "POST",
+                  headers:setHeaders({ "Content-Type": "application/json" }),
+                  body: JSON.stringify({message: postComment, postId: post._id, user: currentUser.username})
+              })
+              const result = await response.json();
+              if(response.ok){
+                if(result){
+                    setAllCommentsData(prevState => [result, ...prevState])
+                    setPostComment("")
+                    toast.success("Comment posted successfully")
+                }
+              }
+              else if(!response.ok){
+                  if(result.error){
+                    throw new Error(result.error)
+                  }
+              }
+        }
+        catch(err){
+            console.log(err);
+        }
+       
 
     }
     const PostAllCommentsHandler = async () =>{
-        setCommentsShow(prevState => !prevState)
-        if(commentsShow){
-                const response = await fetch("/getPostAllComments",{
-                    method: "POST",
-                    headers: setHeaders({ "Content-Type": "application/json" }),
-                    body: JSON.stringify({postId: post._id})
-                }).catch(err => console.error(err));
-                const result = await response.json()
-                if(Array.isArray(result) && result.length === 0){
-                    toast.error("No comments")
-                }
-                if(!result.error){
-                    setAllCommentsData(result)
-                }
-                else if(result.error){
-                    console.log(result);
-                }
+        try{
+            setCommentsShow(prevState => !prevState)
+            if(commentsShow){
+                    const response = await fetch("/getPostAllComments",{
+                        method: "POST",
+                        headers: setHeaders({ "Content-Type": "application/json" }),
+                        body: JSON.stringify({postId: post._id})
+                    })
+                    const result = await response.json()
+                    if(response.ok){
+                        if(result){
+                            if(Array.isArray(result) && result.length === 0){
+                                toast.error("No comments")
+                            }
+                            else{
+                                setAllCommentsData(result)
+                            }     
+                        }
+                    }
+                    else if(!response.ok){
+                        if(result.error){
+                            throw new Error(result.error);
+                        }
+                    }
+            }
         }
+        catch(err){
+            console.log(err);
+        }
+       
     }
 
     const removeCommentHandler = (data) => {

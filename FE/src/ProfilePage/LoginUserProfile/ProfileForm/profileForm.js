@@ -21,6 +21,7 @@ const ProfileForm = (props) => {
     const [inputZip, setInputZip] = useState(userObject.otherInformation.address.zip);
 
     const formSubmitHandler = async (e) => {
+      try{
         e.preventDefault();
         let task = "profileDataUpdate";
 
@@ -30,15 +31,19 @@ const ProfileForm = (props) => {
         data: formDataSent,
         loginUser : currentUser.username,
         task,
-        }).catch(error => console.error(error));
-        // console.log(data);
-        if(!data.error) {
+        });
+        if(data) {
         toast.success("Update Successfully")
         }
-        else if(data.error){
-          console.log(data);
+      }
+      catch(err){
+        if(err.response.data.error){
+          console.log(err.response.data.error)
         }
-        
+        else {
+          console.log(err)
+        }
+      }
     };
     const handleRatioInput = (e) => {
         // console.log(e)

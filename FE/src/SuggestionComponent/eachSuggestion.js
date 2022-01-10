@@ -21,20 +21,26 @@ const EachSuggestion = (props) => {
     },[suggestion.notifications.friendsRequest, currentUser.username])
 
     const addFriendHandler = (friend) => {
+      try{
         fetch("/addFriend",{
-            method: "POST",
-            headers: setHeaders({ "Content-Type": "application/json" }),
-            body: JSON.stringify({loginUser: currentUser.username, friendUser:friend.username})
-        }).then(res => res.json()).then(data => {
-          // console.log(data)
-          if(!data.error){
-            setAddFriendBoolean(prevState => !prevState)
-          }
-          else if(data.error){
-            console.log(data);
-          }
-        }).catch(error => console.error(error))
-}
+          method: "POST",
+          headers: setHeaders({ "Content-Type": "application/json" }),
+          body: JSON.stringify({loginUser: currentUser.username, friendUser:friend.username})
+      }).then(res => res.json()).then(data => {
+        // console.log(data)
+        if(!data.error){
+          setAddFriendBoolean(prevState => !prevState)
+        }
+        else if(data.error){
+          throw new Error(data.error);
+        }
+      }).catch(error => console.error(error))
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+        
     return(
         <div className={classes.user}>
           <img src={suggestion.imageUrl} className={classes.userImage} onError={(e)=> { e.target.setAttribute("src",userLogo)}} alt=""></img>
