@@ -58,8 +58,9 @@
     color: var(--dark-grey);
     cursor: pointer;
 }
-.postOptions:hover{
+.postOptions:active{
     background-color: var(--grey);
+    color: white;
 }
 .postMenu{
     background-color: var(--light-grey);

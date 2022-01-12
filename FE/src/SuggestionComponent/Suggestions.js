@@ -6,19 +6,14 @@ import axios from "axios";
 import setHeaders from "../Assets/Apis data/fetch";
 
 const Suggestions = (props) => {
-  const mySuggestions = useSelector((state) => state.users.mySuggestions);
+
+  const currentUser = useSelector(state => state.auth.loginUserInfo)
+  const filteredSuggestions = useSelector((state) => state.users.myFilteredSuggestions);
 
   const [showSearchInput, setShowSearchHandler] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [filteredSuggestions, setFilteredSuggestions] = useState(mySuggestions);
-
-  const currentUser = useSelector(state => state.auth.loginUserInfo)
-
-  // console.log(searchText);
-  // console.log(filteredSuggestions);
 
   const dispatch = useDispatch();
-  // console.log(mySuggestions)
 
   useEffect(() => {
     try{
@@ -44,36 +39,37 @@ const Suggestions = (props) => {
   }, [currentUser.username, dispatch]);
  
   useEffect(() => {
-    const timeoutDelay = setTimeout(async () => {
-      try{
-        const { data } = await axios.post("/getFilteredSuggestion", {
-          loginUser: currentUser.username,
-          inputText: searchText,
-        })
-        if(data){
-          setFilteredSuggestions(data);
+    if(searchText !== ""){
+      const timeoutDelay = setTimeout(async () => {
+        try{
+          const { data } = await axios.post("/getFilteredSuggestion", {
+            loginUser: currentUser.username,
+            inputText: searchText,
+          })
+          if(data){
+            dispatch({type: "SAVE_ALL_FILTERED_SUGGESTIONS", payload: data})
+          }
         }
-      }
-      catch(err){
-        if(err.response.data.error){
-          console.log(err.response.data.error)
+        catch(err){
+          if(err.response.data.error){
+            console.log(err.response.data.error)
+          }
+          else {
+            console.log(err)
+          }
         }
-        else {
-          console.log(err)
-        }
-      }
-      
-    }, 500);
-    return () => clearTimeout(timeoutDelay);
-  }, [searchText, currentUser.username]);
+        
+      }, 500);
+      return () => clearTimeout(timeoutDelay);
+    }
+  }, [searchText, currentUser.username,dispatch]);
 
   const searchHandler = async (e) => {
     if (e.target.value !== "") {
       setSearchText(e.target.value);
     }
     if (e.target.value === "") {
-      setSearchText("");
-      setFilteredSuggestions(mySuggestions);
+      dispatch({type: "RESET_FILTERED_SUGGESTIONS"})
     }
   };
 

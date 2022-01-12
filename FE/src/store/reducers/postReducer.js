@@ -14,6 +14,15 @@ const postReducer = (state = initialState,action) => {
             // console.log(action.payload);
             return {...state, allposts: [action.payload, ...state.allposts]}
         }
+        case "POST_SORT_BY_RECENT":{
+            state.allposts.sort(function(a, b){
+                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            })
+            state.reportedPosts.sort(function(a, b){
+                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            })
+            return {...state, allposts: [...state.allposts]}
+        }
         case "POST_SORT_BY_BOTTOM" : {
             const newArrayForAllPosts = []
             const newArrayForAllReportedPosts = []

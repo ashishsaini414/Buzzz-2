@@ -4,13 +4,12 @@ import EachProfilePage from "./eachProfilePage";
 import classes from "./profilePage.module.css";
 
 const ProfilePage = () => {
-
   return (
     <div className={classes.wholePage}>
       <NavigationBar />
       <div className={classes.middleParts}>
         <div className={classes.profileDetails}>
-            <EachProfilePage/>
+          <EachProfilePage />
         </div>
         <div className={classes.suggestions}>
           <Suggestions />

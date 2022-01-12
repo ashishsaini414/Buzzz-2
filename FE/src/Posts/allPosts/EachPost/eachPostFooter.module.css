@@ -73,3 +73,6 @@
     background-color: var(--light-grey);
     padding: 9px 8px;
 }
+.enterCommentField:focus{
+    outline: none
+}

@@ -33,6 +33,9 @@
     border: 1px solid var(--light-grey);
     padding: 0 5px;
 }
+.searchInput:focus{
+    outline: none;
+}
 .suggestionList{
     margin-top: 5px;
     overflow: auto;

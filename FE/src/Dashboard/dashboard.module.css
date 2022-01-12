@@ -1,29 +1,64 @@
-@import url("../Assets/cssVariables/variables.css"); 
-.dashboard{
-    background-color: var(--light-grey);
-    position: relative;
+@import url("../Assets/cssVariables/variables.css");
+
+.dashboard {
+  background-color: var(--light-grey);
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  padding-top: 14vh;
 }
-.middleComponents{
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 10vh;
-    padding-top: 4vh;
+.UserComponent {
+  height: 85vh;
+  width: 300px;
+  position: fixed;
+  left: 0;
+  margin-left: 1.5em;
+  overflow: auto;
+  padding: 0.2em 0.3em;
 }
-.UserComponent{
-    height: 20em;
-    width: 15em;
+.UserComponent::-webkit-scrollbar {
+  width: 6px;
 }
-.posts{
-    width: 38em;
+.UserComponent::-webkit-scrollbar-track {
+  visibility: hidden;
+  margin: 0.2em 0;
 }
-.asideComponents{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 46em;
-    width: 12.5em;
+.UserComponent::-webkit-scrollbar-thumb {
+  background: #888;
+  visibility: hidden;
+  border-radius: 50px;
+}
+.UserComponent:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
 }
 
+.posts {
+  width: 38em;
+  margin-left: 30px;
+}
+.asideComponents {
+  height: 85vh;
+  width: 235px;
+  position: fixed;
+  right: 0;
+  margin-right: 2.5em;
+  overflow: auto;
+  padding: 0.2em 0.3em;
+}
 
-
+.asideComponents::-webkit-scrollbar {
+  width: 6px;
+}
+.asideComponents::-webkit-scrollbar-track {
+  visibility: hidden;
+  margin: 0.2em 0;
+}
+.asideComponents::-webkit-scrollbar-thumb {
+  background: #888;
+  visibility: hidden;
+  border-radius: 50px;
+}
+.asideComponents:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
 

@@ -28,7 +28,6 @@ const FriendsComponent = (props) => {
               toast.error("Already removed")
             }
             else{
-              props.removeFriend(response.FriendUserResponse)
               dispatch({type: "REMOVE_FRIEND",payload: response.FriendUserResponse})
               toast.success(`${friend.name} removed Successfully `);
               setIsFriendRemoved(true)

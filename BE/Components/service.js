@@ -217,10 +217,11 @@ module.exports.getAllPosts = async (dataReceiveFromClient) => {
       friendsAllPosts.push(...result)
     }
     const AllPosts = userAllPosts.concat(friendsAllPosts)
-    //reversing the all posts for the functionality- latest post on TOP position
-    const postsAfterSorting = AllPosts.reverse()
+    //sorting the all posts by DATE for the functionality- latest post on TOP position, by SORT method
+    AllPosts.sort((a,b)=> new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
     //for pagination
-    const returningAllPosts = postsAfterSorting.slice(firstIndex,lastIndex)
+    const returningAllPosts = AllPosts.slice(firstIndex,lastIndex)
 
     return returningAllPosts;
 

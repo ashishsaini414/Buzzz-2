@@ -103,12 +103,17 @@ const AllPosts = (props) => {
   }
 
   const sortBy = (e) => {
+
+    if(e.target.value === "Recent"){
+      dispatch({type: "POST_SORT_BY_RECENT"})
+    }
     if(e.target.value === "Bottom"){
       dispatch({type: "POST_SORT_BY_BOTTOM"})
     }
     if(e.target.value === "Top"){
       dispatch({type: "POST_SORT_BY_TOP"})
     }
+
   }
 
   return (
@@ -118,6 +123,7 @@ const AllPosts = (props) => {
           <div className={classes.sortBy}>
             <p>Sort By:</p>
             <select onChange={(e)=> sortBy(e)} className={classes.sortOptionsList}>
+              <option value="Recent">Recent</option>
               <option value="Top">Top</option>
               <option value="Bottom">Bottom</option>
             </select>

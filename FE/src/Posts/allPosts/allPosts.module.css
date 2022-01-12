@@ -8,10 +8,18 @@
     column-gap: 0.5em;
     align-items: center;
 }
+.sortBy p{
+    font-size: 0.9em;
+}
 .sortOptionsList{
-    border: 1px solid var(--grey);
-    border-radius: 3px;
-    height: 1.8em;
+    background: transparent;
+    border: none;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+.sortOptionsList:focus{
+    outline: none;
 }
 .loader{
     height: 4em;

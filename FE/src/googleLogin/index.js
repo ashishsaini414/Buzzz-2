@@ -28,6 +28,7 @@ const Login = () => {
 
   return (
     <Fragment>
+      <div className={classes.loginWholePage}>
       <div className={classes.loginContainer}>
         <img src={ttnLogo} className={classes.logo} alt="this is ttn logo"></img>
         <h2>Enter your details and Start your journey with us</h2>
@@ -43,6 +44,7 @@ const Login = () => {
           cookiePolicy={"single_host_origin"}
           // isSignedIn={true}
         />
+      </div>
       </div>
     </Fragment>
   );

@@ -18,6 +18,9 @@
     border: none;
     background-color: var(--light-grey);
 }
+.postInput:focus{
+    outline: none;
+}
 .fileUploadLabel{
     padding: 7px 9px;
     font-size: 0.9em;

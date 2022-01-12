@@ -6,20 +6,18 @@ import classes from "./allFriends.module.css";
 import setHeaders from "../Assets/Apis data/fetch";
 
 const MyFriends = (props) => {
-  const dispatch = useDispatch();
+
+  const filteredFriends = useSelector((state) => state.users.allFilteredFriends);
+  const currentUser = useSelector(state => state.auth.loginUserInfo);
+
   const [showSearchInput, setShowSearchHandler] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [filteredFriends, setFilteredFriends] = useState([]);
-  const myFriends = useSelector((state) => state.users.allFriends);
-  
-  const currentUser = useSelector(state => state.auth.loginUserInfo)
 
-  // console.log(filteredFriends);
-  // console.log(searchText);
+  const dispatch = useDispatch();
 
   useEffect(() => {
 
-    //syntax error ayega kuch to try/catch mai catch block run hoga otherwise koi api se error ata hai to vo then/catch block ke catch block mai jayega
+    //syntax error ayega kuch, to try/catch mai catch block run hoga otherwise koi api se error ata hai to vo then/catch block ke catch block mai jayega
     try{
       fetch("/getAllFriends", {
         method: "POST",
@@ -43,49 +41,38 @@ const MyFriends = (props) => {
   }, [currentUser.username, dispatch]);
 
   useEffect(() => {
-    const timeoutDelay = setTimeout(async () => {
-      try{
-        const { data } = await axios.post("/getFilteredFriends", {
-          loginUser: currentUser.username,
-          inputText: searchText,
-        })
-        if(data){
-          setFilteredFriends(data);
+    if(searchText !== ""){
+      const timeoutDelay = setTimeout(async () => {
+        try{
+          const { data } = await axios.post("/getFilteredFriends", {
+            loginUser: currentUser.username,
+            inputText: searchText,
+          })
+          if(data){
+            dispatch({type: "SAVE_ALL_FILTERED_FRIENDS", payload: data})
+          }
         }
-      }
-      catch(err){
-        if(err.response.data.error){
-          console.log(err.response.data.error);
+        catch(err){
+          if(err.response.data.error){
+            console.log(err.response.data.error);
+          }
+          else {
+            console.log(err);
+          }
         }
-        else {
-          console.log(err);
-        }
-      }
-    }, 500);
-    return () => clearTimeout(timeoutDelay);
-  }, [searchText, currentUser.username]);
+      }, 500);
+      return () => clearTimeout(timeoutDelay);
+    }
+  }, [searchText, currentUser.username, dispatch]);
 
   const searchHandler = async (e) => {
     if (e.target.value !== "") {
       setSearchText(e.target.value);
     }
     if (e.target.value === "") {
-      setSearchText("");
-      setFilteredFriends(myFriends);
+      dispatch({type:"RESET_FILTERED_FRIENDS"})
     }
   };
-
-  const removeFriendHandler = (data) => {
-    console.log(data);
-    setFilteredFriends((prevState,index) => {
-      prevState.forEach(friend => {
-        if(friend._id === data._id){
-          prevState.splice(index)
-        }
-      })
-      return [...prevState]
-    })
-  }
 
   return (
     <Fragment>
@@ -113,7 +100,7 @@ const MyFriends = (props) => {
           {filteredFriends.map((friend, index) => {
             return (
               <div key={index}>
-                <EachFriend data={friend} removeFriend={removeFriendHandler} />
+                <EachFriend data={friend}/>
               </div>
             );
           })}

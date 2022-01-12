@@ -1,3 +1,9 @@
+.loginWholePage{
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    position: absolute;
+}
 .loginContainer{
     background-color: rgb(242, 233, 233);
     border-radius: 10px;
