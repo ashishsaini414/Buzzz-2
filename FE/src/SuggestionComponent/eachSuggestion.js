@@ -4,6 +4,7 @@ import userLogo from '../Assets/Images/userlogo';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import setHeaders from '../Assets/Apis data/fetch';
+import axios from 'axios';
 
 
 const EachSuggestion = (props) => {
@@ -40,13 +41,39 @@ const EachSuggestion = (props) => {
         console.log(err);
       }
     }
+
+    const cancelFriendRequestHandler = async (friend) => {
+      try{
+         const confirmation =  window.confirm("Do you want to cancel the friend Request");
+         if(confirmation === true){
+          const { data } = await axios.put("/cancelFriendRequest",{
+            friendId: friend._id,
+            loginUserUsername: currentUser.username
+          });
+          if(data){
+            console.log(data)
+            if(!data.notifications.friendsRequest.includes(currentUser.username)){
+              setAddFriendBoolean(true)
+            }
+          }
+         }
+      }
+      catch(err){
+          if(err.data.response.error){
+            console.log(err.data.response.error)
+          }
+          else{
+            console.log(err);
+          }
+      }
+    }
         
     return(
         <div className={classes.user}>
           <img src={suggestion.imageUrl} className={classes.userImage} onError={(e)=> { e.target.setAttribute("src",userLogo)}} alt=""></img>
           <p  className={classes.userName} onClick={()=> navigate(`/profile/${suggestion.username}`)}>{suggestion.name}</p>
           {addFriendBoolean ? <button className={classes.addUserButton} onClick={(event) => addFriendHandler(suggestion)} >Add</button>
-          : <button className={classes.addUserButton}>Request Sent</button>}
+          : <button className={classes.addUserButton} onClick={()=>cancelFriendRequestHandler(suggestion)}>Request Sent</button>}
         </div>
         )
 }

@@ -95,5 +95,9 @@ module.exports.getFilteredFriends = async (req, res) => {
     const response = await users.getFilteredFriends(req.body);
     res.send(JSON.stringify(response));
 }
+module.exports.cancelFriendRequest = async (req, res) => {
+    const response = await users.cancelFriendRequest(req.body);
+    res.send(JSON.stringify(response));
+}
 
 

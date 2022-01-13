@@ -25,6 +25,7 @@ router.delete("/deletePost",users.deletePost)
 router.post("/approvePost",users.approvePost);
 router.post("/getFilteredSuggestion",users.getFilteredSuggestion);
 router.post("/getFilteredFriends",users.getFilteredFriends);
+router.put("/cancelFriendRequest", users.cancelFriendRequest);
 
 
 module.exports = router;

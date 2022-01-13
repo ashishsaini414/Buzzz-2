@@ -115,7 +115,7 @@ const CreatePost = () => {
           className={classes.fileUpload}
           id="postfile"
           maxLength="20"
-          accept=" .jpg, .jpeg .png"
+          accept=" .jpg, .jpeg, .png"
           onChange={(e) => fileUploadHandler(e)}
         ></input>
       </form>

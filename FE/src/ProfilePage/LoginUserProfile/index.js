@@ -110,6 +110,7 @@ const LoginUserProfile = (props) => {
                 type="file"
                 style={{ display: "none" }}
                 id="coverImageUpdate"
+                accept=".jpg, .png, .jpeg"
                 onChange={(e) => updateProfileHandler(e, "coverImageUpload")}
               />
             </div>
@@ -131,6 +132,7 @@ const LoginUserProfile = (props) => {
             id="imageUpdate"
             onChange={(e) => updateProfileHandler(e, "profileImageUpload")}
             style={{ display: "none" }}
+            accept=" .jpg, .png, .jpeg"
           ></input>
           <p className={classes.userName}>{getProfileData.userObject.name}</p>
           <ProfileForm getProfileData={getProfileData}/>

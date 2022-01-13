@@ -580,3 +580,17 @@ module.exports.getFilteredFriends = async (dataFromClient) => {
     return error.message;
   }
 }
+module.exports.cancelFriendRequest = async (dataFromClient) => {
+  try{
+      const { friendId, loginUserUsername} = dataFromClient;
+      const loginUser = await users.User.findById(friendId);
+      if(loginUser.notifications.friendsRequest.includes(loginUserUsername)){
+        await loginUser.updateOne({$pull: {"notifications.friendsRequest" : loginUserUsername}},{new: true});
+        const updatedUser = await users.User.findById(friendId);
+        return updatedUser
+      }
+  }
+  catch(err){
+    return "error"
+  }
+}
